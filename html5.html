@@ -5,14 +5,30 @@
 	<title>HTML</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="ui.js"></script>
+	<style>
+		*{margin:0;padding:0;}
+		.content {display:none;width:0;height:0;background-color:#efefef;-webkit-transition: width 2s, height 2s, background-color 2s;}
+		.content.active {width:250px;height:250px;}
+	</style>
 </head>
 <body>
 	<div id="wrap">
-		<ul>
-			<li>item1</li>
-			<li>item2</li>
-			<li>item3</li>
-		</ul>
+		<div id="tabNav">
+		<div id="ba1123"></div>
+			<ul id="tab_navi">
+				<li><a href="#c1">item1</a></li>
+				<li><a href="#c2">item2</a></li>
+				<li><a href="#c3">item3</a></li>
+			</ul>
+			<div id="c1" class="content">1</div>
+			<div id="c2" class="content">2</div>
+			<div id="c3" class="content">3</div>
+		</div>
 	</div>
+	<script>
+		window.addEventListener('load', function(){
+			UI.tab('#tabNav');
+		})
+	</script>
 </body>
 </html>
