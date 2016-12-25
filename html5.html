@@ -7,8 +7,8 @@
 	<script src="ui.js"></script>
 	<style>
 		*{margin:0;padding:0;}
-		.content {display:none;width:0;height:0;background-color:#efefef;-webkit-transition: width 2s, height 2s, background-color 2s;}
-		.content.active {width:250px;height:250px;}
+		.contents {display:none;width:0;height:0;background-color:#efefef;-webkit-transition: width 2s, height 2s, background-color 2s;}
+		.contents.active {width:250px;height:250px;}
 	</style>
 </head>
 <body>
@@ -20,11 +20,12 @@
 				<li><a href="#c2">item2</a></li>
 				<li><a href="#c3">item3</a></li>
 			</ul>
-			<div id="c1" class="content">1</div>
-			<div id="c2" class="content">2</div>
-			<div id="c3" class="content">3</div>
+			<div id="c1" class="contents">1</div>
+			<div id="c2" class="contents">2</div>
+			<div id="c3" class="contents">3</div>
 		</div>
 	</div>
+	
 	<script>
 		window.addEventListener('load', function(){
 			UI.tab('#tabNav');
