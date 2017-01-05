@@ -3,9 +3,17 @@ var buffer = require('vinyl-buffer');
 var csso = require('gulp-csso');
 var imagemin = require('gulp-imagemin');
 var merge = require('merge-stream');
+var sass = require('gulp-sass');
 
 var spritesmith = require('gulp.spritesmith');
 
+
+// Define our tasks
+gulp.task('sass', function generateSass () {
+    gulp.src('css/*.scss')
+        .pipe(sass({outputStyle: 'expanded'}))  //outputStyle : expanded, compact, compressed
+        .pipe(gulp.dest('scss/'));
+});
 
 // https://www.npmjs.com/package/gulp.spritesmith
 gulp.task('sprite', function () {
@@ -29,6 +37,10 @@ gulp.task('sprite', function () {
 
     // Return a merged stream to handle both `end` events
     return merge(imgStream, cssStream);
+});
+
+gulp.task('watch', function () {
+    gulp.watch('css/**/*.scss', ['sass']);
 });
 
 gulp.task('default', ['sprite']);
