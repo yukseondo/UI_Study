@@ -43,4 +43,4 @@ gulp.task('watch', function () {
     gulp.watch('css/**/*.scss', ['sass']);
 });
 
-gulp.task('default', ['sprite']);
+gulp.task('default', ['watch']);
