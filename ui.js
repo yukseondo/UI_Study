@@ -11,15 +11,34 @@ UI = {};
 		}
 		hidecontentsDiv();
 
-		tabList.find('a').on('click', function(){
+		tabList.find('a').on('click', function(e){
+		    e.preventDefault();
 			hidecontentsDiv();
 			tabWrap.find($(this).attr('href')).show().addClass('active');			
 		});
 		tabWrap.find('#tab_navi li:first-child a').click();
-	}
-	var test = function(){
-		console.log('2')
-	}
+	};
+	var fixed = UI.fixedUI = function(fixedID,fixWrap){
+		var fixedWrap = $(fixedID), firstScrollVal = fixedWrap.offset().top, fixWrapHeight = $(fixWrap).outerHeight();
+
+		function resetFixed(){
+            fixedWrap.css({
+                'position' : 'static'
+            })
+        }
+
+        $(window).on('scroll', function(){
+            if(firstScrollVal <= $(this).scrollTop() && $(this).scrollTop() < parseInt(firstScrollVal + fixWrapHeight)){
+                fixedWrap.css({
+                    'position' : 'fixed',
+                    'left' : 0,
+                    'top' : 0
+                })
+            }else{
+                resetFixed();
+            }
+        })
+	};
 })();
 
 

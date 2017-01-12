@@ -9,12 +9,14 @@
 		*{margin:0;padding:0;}
 		.contents {display:none;width:0;height:0;background-color:#efefef;-webkit-transition: width 2s, height 2s, background-color 2s;}
 		.contents.active {width:250px;height:250px;}
+        #fixedWrap {border:1px solid red;}
+		#fixedUI {width:100%;background-color:#abdced;}
 	</style>
 </head>
 <body>
 	<div id="wrap">
+        <!-- Tab UI -->
 		<div id="tabNav">
-		<div id="ba1123"></div>
 			<ul id="tab_navi">
 				<li><a href="#c1">item1</a></li>
 				<li><a href="#c2">item2</a></li>
@@ -24,11 +26,22 @@
 			<div id="c2" class="contents">2</div>
 			<div id="c3" class="contents">3</div>
 		</div>
+
+		<!-- Fixed UI -->
+        <div id="fixedWrap">
+            <div id="fixedUI">
+                FixedUI
+            </div>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
 	</div>
-	
+
 	<script>
 		window.addEventListener('load', function(){
 			UI.tab('#tabNav');
+			UI.fixedUI('#fixedUI', '#fixedWrap');
 		})
 	</script>
 </body>
