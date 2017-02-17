@@ -11,6 +11,7 @@
 		.contents.active {width:250px;height:250px;}
         #fixedWrap {border:1px solid red;}
 		#fixedUI {width:100%;background-color:#abdced;}
+		#accordion li {border-top:1px solid #ccc;}
 		#accordion a {display:block;height:35px;text-align:center;line-height:35px;}
         #accordion .ac_cont {display:none;background-color:#efefef;height:150px;}
 	</style>
@@ -53,7 +54,7 @@
 		window.addEventListener('load', function(){
 			UI.tab('#tabNav');
 			UI.fixedUI('#fixedUI', '#fixedWrap');
-			UI.accordionUI('#accordion', '.ac_cont', false);
+			UI.accordionUI('#accordion', '.ac_cont', true);
 		})
 	</script>
 </body>

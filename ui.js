@@ -45,7 +45,12 @@ UI = {};
         var accWrap = $(accID), accContent = $(accCont);
         accWrap.find('a').on('click', function(){
             if(opt == true) accContent.slideUp(200);
-            $(this).next('div').slideDown(200);
+            if($(this).next('div').css('display') === 'none'){
+				$(this).next('div').slideDown(200);
+			}else{
+				$(this).next('div').slideUp(200);
+			}
+
         })
     }
 })();
