@@ -11,6 +11,7 @@
 		.contents.active {width:250px;height:250px;}
         #fixedWrap {border:1px solid red;}
 		#fixedUI {width:100%;background-color:#abdced;}
+        #accordion .ac_cont {display:none;background-color:#efefef;height:25px;}
 	</style>
 </head>
 <body>
@@ -34,12 +35,24 @@
             </div>
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         </div>
+
+        <!-- Accordion -->
+        <div id="accordion">
+            <ul>
+                <li><a href="#">Q1</a><div class="ac_cont">cont1</div></li>
+                <li><a href="#">Q2</a><div class="ac_cont">cont2</div></li>
+                <li><a href="#">Q3</a><div class="ac_cont">cont3</div></li>
+                <li><a href="#">Q4</a><div class="ac_cont">cont4</div></li>
+                <li><a href="#">Q5</a><div class="ac_cont">cont5</div></li>
+            </ul>
+        </div>
 	</div>
 
 	<script>
 		window.addEventListener('load', function(){
 			UI.tab('#tabNav');
 			UI.fixedUI('#fixedUI', '#fixedWrap');
+			UI.accordionUI('#accordion', '.ac_cont', false);
 		})
 	</script>
 </body>

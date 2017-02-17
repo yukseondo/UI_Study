@@ -39,6 +39,15 @@ UI = {};
             }
         })
 	};
+
+	//Accordion
+    var Accordion = UI.accordionUI = function(accID,accCont,opt){
+        var accWrap = $(accID), accContent = $(accCont);
+        accWrap.find('a').on('click', function(){
+            if(opt == true) accContent.slideUp(500);
+            $(this).next('div').slideDown(500);
+        })
+    }
 })();
 
 
