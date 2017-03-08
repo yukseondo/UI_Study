@@ -1,4 +1,5 @@
 *.iml
 *.xml
 node_modules
-*.idea
+gitignore
+*.log
