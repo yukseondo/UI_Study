@@ -63,7 +63,7 @@
 		<!-- Navigation -->
 		<div id="navigation">
 			<ul>
-				<li class="on"><a href="#" class="nav1">브랜드패션</a>
+				<li><a href="#" class="nav1">브랜드패션</a>
 					<ul>
 						<li><a href="#">브랜드 여성의류</a></li>
 						<li><a href="#">브랜드 여성신발</a></li>
@@ -113,12 +113,12 @@
 			$(document).ready(function(){
 				var navigation = $('#navigation'), navfirst = navigation.find('.nav1');
 				var hideSubMenu = function(){
-					navigation.find('ul ul').hide();
+					navfirst.parent().removeClass('on');
 				};
 				hideSubMenu();
-				navfirst.on('click', function(){
+				navfirst.on('mouseover', function(e){
+				    e.preventDefault();
 					hideSubMenu();
-					console.log($(this))
 					$(this).parent().addClass('on');
 				})
 			})
@@ -126,10 +126,10 @@
 	</div>
 
     <div class="iphoneImg" style="width:375px;height:662px;margin:0 auto;padding:75px 0 0 17px;box-sizing:border-box;background:url('http:///iphone6-portrait3.png2') no-repeat 0 0">
-        <iframe src="http://s-m.011st.com/MW/html/lego/component/accordion.html" width="340" height="505" frameborder="0"></iframe>
+        <iframe src="#" width="340" height="505" frameborder="0"></iframe>
     </div>
     <div class="iphoneImg" style="width:375px;height:662px;margin:0 auto;padding:75px 0 0 17px;box-sizing:border-box;background:url('http:///iphone6-portrait3.png') no-repeat 0 0">
-        <iframe src="http://s-m.011st.com/MW/html/lego/component/accordion.html" width="340" height="505" frameborder="0"></iframe>
+        <iframe src="#" width="340" height="505" frameborder="0"></iframe>
     </div>
     <button type="button" class="pMode">LandscapeMode</button>
 
