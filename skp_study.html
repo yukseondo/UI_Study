@@ -83,10 +83,14 @@
             e.preventDefault();
             hideSubMenu();
             showSubMenu(this);
+            console.log('enter');
         });
-        navfirst.on('mouseout', function(){
+        navigation.find('ul:first-child').on('mouseleave', function(e){
+            hideSubMenu();
+            console.log('leave');
+        });
 
-        })
+        // mouseenter, mouseleave : 자식요소까지이벤트가 전달된다.
     })
 </script>
 </body>
