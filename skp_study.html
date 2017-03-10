@@ -79,18 +79,18 @@
         var showSubMenu = function(that){
             $(that).parent().addClass('on');
         };
-        navfirst.on('mouseenter focus', function(e){
+        navfirst.on('mouseover focus', function(e){
             e.preventDefault();
             hideSubMenu();
             showSubMenu(this);
             console.log('enter');
         });
-        navigation.find('ul:first-child').on('mouseleave', function(e){
+        navfirst.parent().on('mouseleave blur', function(e){
             hideSubMenu();
             console.log('leave');
         });
 
-        // mouseenter, mouseleave : 자식요소까지이벤트가 전달된다.
+        // mouseenter, mouseleave : 부모요소까지이벤트가 전달된다.
     })
 </script>
 </body>
