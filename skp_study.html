@@ -22,7 +22,7 @@
 <!-- Navigation -->
 <div id="navigation">
     <ul>
-        <li><a href="#" class="nav">브랜드패션</a>
+        <li><a href="#">브랜드패션</a>
             <ul>
                 <li><a href="#">브랜드 여성의류</a></li>
                 <li><a href="#">브랜드 여성신발</a></li>
@@ -31,7 +31,7 @@
                 <li><a href="#">디자이너 남성의류</a></li>
             </ul>
         </li>
-        <li><a href="#" class="nav">의류/잡화</a>
+        <li><a href="#">의류/잡화</a>
             <ul>
                 <li><a href="#">여성의류</a></li>
                 <li><a href="#">여성신발</a></li>
@@ -40,7 +40,7 @@
                 <li><a href="#">남성신발</a></li>
             </ul>
         </li>
-        <li><a href="#" class="nav">뷰티</a>
+        <li><a href="#">뷰티</a>
             <ul>
                 <li><a href="#">스켄케어</a></li>
                 <li><a href="#">메이크업</a></li>
@@ -49,7 +49,7 @@
                 <li><a href="#">향수</a></li>
             </ul>
         </li>
-        <li><a href="#" class="nav">레저/자동차</a>
+        <li><a href="#">레저/자동차</a>
             <ul>
                 <li><a href="#">스포츠의류</a></li>
                 <li><a href="#">등산/아웃도어</a></li>
@@ -58,13 +58,17 @@
                 <li><a href="#">자전거</a></li>
             </ul>
         </li>
-        <li><a href="#" class="nav">식품</a>
+        <li><a href="#">식품</a>
             <ul>
                 <li><a href="#">농산</a></li>
                 <li><a href="#">수산</a></li>
                 <li><a href="#">축산</a></li>
                 <li><a href="#">가공식품</a></li>
-                <li><a href="#">커피/생수/음료</a></li>
+                <li><a href="#">커피/생수/음료</a>
+                    <ul>
+                        <li><a href="#">3뎁스메뉴</a></li>
+                    </ul>
+                </li>
             </ul>
         </li>
     </ul>
@@ -72,23 +76,25 @@
 <script>
     $(document).ready(function(){
         var navigation = $('#navigation'), navfirst = navigation.find('.nav');
+
+        function hideSubMenu(that){
+            $(that).parent().parent().find('li').removeClass('on');
+        }
+
+        navigation.find('a').each(function(){
+            $(this).on('mouseover', function(){
+                console.log($(this).next('ul').length)
+                if($(this).next('ul').length) {
+                    if ($(this).next('ul').css('display') === 'none') {
+                        hideSubMenu(this);
+                        $(this).parent().addClass('on');
+                    } else {
+                        $(this).parent().removeClass('on');
+                    }
+                }
+            })
+        });
         //var navfirst = navigation.find('>ul>li>a');
-        var hideSubMenu = function(){
-            navfirst.parent().removeClass('on');
-        };
-        var showSubMenu = function(that){
-            $(that).parent().addClass('on');
-        };
-        navfirst.on('mouseover focus', function(e){
-            e.preventDefault();
-            hideSubMenu();
-            showSubMenu(this);
-            console.log('enter');
-        });
-        navfirst.parent().on('mouseleave blur', function(e){
-            hideSubMenu();
-            console.log('leave');
-        });
 
         // mouseenter, mouseleave : 부모요소까지이벤트가 전달된다.
     })
