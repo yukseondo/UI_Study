@@ -5,6 +5,7 @@
     <title>Study</title>
     <link rel="stylesheet" href="/MW/css/common/base.css" />
     <style>
+        *{margin:0;padding:0;list-style:none;}
         #navigation ul{width:132px;}
         #navigation li {position:relative;}
         #navigation li > ul {position:absolute;right:-132px;top:0;}
@@ -82,21 +83,23 @@
         }
 
         navigation.find('a').each(function(){
-            $(this).on('mouseover', function(){
-                console.log($(this).next('ul').length)
+            $(this).on('mouseenter focus', function(){
                 if($(this).next('ul').length) {
                     if ($(this).next('ul').css('display') === 'none') {
                         hideSubMenu(this);
                         $(this).parent().addClass('on');
-                    } else {
-                        $(this).parent().removeClass('on');
                     }
                 }
             })
         });
+
+        navigation.find('>ul').on('mouseleave blur', function(){
+            navigation.find('li').removeClass('on');
+        });
+
         //var navfirst = navigation.find('>ul>li>a');
 
-        // mouseenter, mouseleave : 부모요소까지이벤트가 전달된다.
+        // mouseenter, mouseleave : 자식 엘리먼트에서 동작하지 않는다.
     })
 </script>
 </body>
