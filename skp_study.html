@@ -15,14 +15,80 @@
         #navigation li.on > ul {display:block;}
         #navigation li.on > a {background-color:#f43142}
         #navigation li.on > a:after {position:absolute;right:0;top:50%;margin-top:-3px;content:'';display:inline-block;width:0;height:0;border-left:5px solid #fff;border-right:5px solid transparent;border-top:5px solid transparent;border-bottom:5px solid transparent;}
+
+        .selector li:first-letter {background-color:red;color:#fff;}
+        .selector li[class~="a"] {background-color:yellow;}
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="inside.js"></script>
 </head>
 <body>
+<!-- selector test -->
+<ul class="selector">
+    <li><a>가나다라마바사</a></li>
+    <li><a>가나다라마바사</a></li>
+    <li><a>가나다라마바사</a></li>
+    <li class="a"><a>가나다라마바사</a></li>
+    <li><a>가나다라마바사</a></li>
+    <li class="a"><a>가나다라마바사</a></li>
+    <li><a>가나다라마바사</a></li>
+    <li><a>가나다라마바사</a></li>
+    <li><a>가나다라마바사</a></li>
+    <li><a>가나다라마바사</a></li>
+    <li><a>가나다라마바사</a></li>
+</ul>
 <!-- Navigation -->
 <div id="navigation">
     <ul>
+        <li><a href="#">브랜드패션</a>
+            <ul>
+                <li><a href="#">브랜드 여성의류</a></li>
+                <li><a href="#">브랜드 여성신발</a></li>
+                <li><a href="#">브랜드 시계</a></li>
+                <li><a href="#">디자이너 여성의류</a></li>
+                <li><a href="#">디자이너 남성의류</a></li>
+            </ul>
+        </li>
+        <li><a href="#">의류/잡화</a>
+            <ul>
+                <li><a href="#">여성의류</a></li>
+                <li><a href="#">여성신발</a></li>
+                <li><a href="#">여성가방</a></li>
+                <li><a href="#">남성의류</a></li>
+                <li><a href="#">남성신발</a></li>
+            </ul>
+        </li>
+        <li><a href="#">뷰티</a>
+            <ul>
+                <li><a href="#">스켄케어</a></li>
+                <li><a href="#">메이크업</a></li>
+                <li><a href="#">선케어</a></li>
+                <li><a href="#">클렌징/필링</a></li>
+                <li><a href="#">향수</a></li>
+            </ul>
+        </li>
+        <li><a href="#">레저/자동차</a>
+            <ul>
+                <li><a href="#">스포츠의류</a></li>
+                <li><a href="#">등산/아웃도어</a></li>
+                <li><a href="#">캠핑</a></li>
+                <li><a href="#">스포츠잡화</a></li>
+                <li><a href="#">자전거</a></li>
+            </ul>
+        </li>
+        <li><a href="#">식품</a>
+            <ul>
+                <li><a href="#">농산</a></li>
+                <li><a href="#">수산</a></li>
+                <li><a href="#">축산</a></li>
+                <li><a href="#">가공식품</a></li>
+                <li><a href="#">커피/생수/음료</a>
+                    <ul>
+                        <li><a href="#">3뎁스메뉴</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
         <li><a href="#">브랜드패션</a>
             <ul>
                 <li><a href="#">브랜드 여성의류</a></li>
@@ -83,23 +149,31 @@
         }
 
         navigation.find('a').each(function(){
-            $(this).on('mouseenter focus', function(){
-                if($(this).next('ul').length) {
+            if($(this).next('ul').length) {
+                $(this).on('mouseenter focus', function(){
                     if ($(this).next('ul').css('display') === 'none') {
                         hideSubMenu(this);
                         $(this).parent().addClass('on');
                     }
-                }
-            })
+                });
+            }
         });
 
         navigation.find('>ul').on('mouseleave blur', function(){
             navigation.find('li').removeClass('on');
         });
 
-        //var navfirst = navigation.find('>ul>li>a');
-
         // mouseenter, mouseleave : 자식 엘리먼트에서 동작하지 않는다.
+
+//        for(var i=1; i<10; i++){
+//            for(var j=10; j>i; j--){
+//                document.write('&nbsp;');
+//            }
+//            for(var k=1; k<i*2; k++){
+//                document.write('*')
+//            }
+//            document.write('<br>')
+//        }
     })
 </script>
 </body>
