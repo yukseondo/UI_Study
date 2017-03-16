@@ -164,27 +164,31 @@
         });
 
         // mouseenter, mouseleave : 자식 엘리먼트에서 동작하지 않는다.
+    });
 
-//        for(var i=1; i<15; i++){
-//            for(var j=15; j>i; j--){
-//                document.write('&nbsp;');
-//            }
-//            for(var k=1; k<i*2; k++){
-//                document.write('*')
-//            }
-//            document.write('<br>')
+    var output = '', output2 = '';
+    for(var i=1; i<15; i++){
+        for(var j=1; j<i; j++){
+            output += '*';
+        }
+        output += '<br>';
+    }
+
+//    for(var i=1; i<10; i++){
+//        for(var k=10; k>i; k--){
+//            output2 += '&nbsp;'
 //        }
-//
-//        for(var i=1; i<15; i++){
-//            for(var k=1; k<i; k++){
-//                document.write('&nbsp;')
-//            }
-//            for(var j=15; j>i*2; j--){
-//                document.write('*')
-//            }
-//            document.write('<br>')
+//        for(var j=1; j<i; j++){
+//            output2 += '*';
 //        }
-    })
+//        output2 += '<br>';
+//    }
+    $('body').append('<div id="pyramidWrap"><div class="pyramid">' + output + '</div>' + '<div class="pyramid">' + output + '</div></div>' + '<div>'+output2 +'</div>');
 </script>
+<style>
+    #pyramidWrap {position:relative;}
+    .pyramid {position:absolute;left:67px;top:0;}
+    .pyramid:nth-last-of-type(1) {left:0;transform:rotate3d(0,1,0, 180deg)}
+</style>
 </body>
 </html>
