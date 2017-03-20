@@ -20,7 +20,9 @@ var server = require('gulp-server-livereload');
 gulp.task('sprite', function () {
     // Generate our spritesheet
     var spriteData = gulp.src('img/sprite/*.png').pipe(spritesmith({
+        // retinaSrcFilter: ['img/sprite/*-2x.png'],
         imgName: 'sprite.png',
+        // retinaImgName: 'spritesheet-2x.png',
         // padding: 5,
         cssName: 'sprite.css'
     }));
