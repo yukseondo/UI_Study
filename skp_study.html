@@ -18,6 +18,8 @@
 
         .selector li:first-letter {background-color:red;color:#fff;}
         .selector li[class~="a"] {background-color:yellow;}
+
+        #sd {width:300px;height:150px;overflow:hidden;}
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="inside.js"></script>
@@ -140,6 +142,15 @@
         </li>
     </ul>
 </div>
+<div id="sd">
+    <div class="sd_content">1</div>
+    <div class="sd_content">2</div>
+    <div class="sd_content">3</div>
+    <div class="sd_content">4</div>
+    <div class="sd_content">5</div>
+    <button type="button" class="btn_prev">PREV</button>
+    <button type="button" class="btn_next">NEXT</button>
+</div>
 <script>
     $(document).ready(function(){
         var navigation = $('#navigation');
@@ -149,14 +160,12 @@
         }
 
         navigation.find('a').each(function(){
-            if($(this).next('ul').length) {
-                $(this).on('mouseenter focus', function(){
-                    if ($(this).next('ul').css('display') === 'none') {
-                        hideSubMenu(this);
-                        $(this).parent().addClass('on');
-                    }
-                });
-            }
+            $(this).on('mouseenter focus', function(){
+                if ($(this).next('ul').length && $(this).next('ul').css('display') === 'none') {
+                    hideSubMenu(this);
+                    $(this).parent().addClass('on');
+                }
+            });
         });
 
         navigation.find('>ul').on('mouseleave blur', function(){
@@ -165,6 +174,13 @@
 
         // mouseenter, mouseleave : 자식 엘리먼트에서 동작하지 않는다.
     });
+
+
+    function sd(){
+        var $SD = $('#sd'), $PREV = $('.btn_prev'), $NEXT = ('.btn_next');
+
+    }
+
 
     var output = '', output2 = '';
     for(var i=1; i<15; i++){
@@ -184,6 +200,12 @@
 //        output2 += '<br>';
 //    }
     $('body').append('<div id="pyramidWrap"><div class="pyramid">' + output + '</div>' + '<div class="pyramid">' + output + '</div></div>' + '<div>'+output2 +'</div>');
+
+    function add(x,y){
+        return x+y;
+    }
+    add.result = add(3,2);
+    add.status = 'OK';
 </script>
 <style>
     #pyramidWrap {position:relative;}

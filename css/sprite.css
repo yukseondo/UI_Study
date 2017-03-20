@@ -1,0 +1,150 @@
+/*
+Icon classes can be used entirely standalone. They are named after their original file names.
+
+Example usage in HTML:
+
+`display: block` sprite:
+<div class="icon-home"></div>
+
+To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+
+// CSS
+.icon {
+  display: inline-block;
+}
+
+// HTML
+<i class="icon icon-home"></i>
+*/
+.icon-bulb_off-2x {
+  background-image: url(sprite.png);
+  background-position: -64px 0px;
+  width: 64px;
+  height: 64px;
+}
+.icon-calendar-2x {
+  background-image: url(sprite.png);
+  background-position: -128px 0px;
+  width: 64px;
+  height: 64px;
+}
+.icon-credit_card-2x {
+  background-image: url(sprite.png);
+  background-position: 0px -64px;
+  width: 64px;
+  height: 64px;
+}
+.icon-facebook {
+  background-image: url(sprite.png);
+  background-position: -96px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-flickr {
+  background-image: url(sprite.png);
+  background-position: -80px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-google-plus {
+  background-image: url(sprite.png);
+  background-position: -16px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-home-2x {
+  background-image: url(sprite.png);
+  background-position: -128px -64px;
+  width: 64px;
+  height: 64px;
+}
+.icon-instagram {
+  background-image: url(sprite.png);
+  background-position: -128px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-like {
+  background-image: url(sprite.png);
+  background-position: -32px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-line {
+  background-image: url(sprite.png);
+  background-position: -48px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-messenger {
+  background-image: url(sprite.png);
+  background-position: -64px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-paper_plane-2x {
+  background-image: url(sprite.png);
+  background-position: 0px 0px;
+  width: 64px;
+  height: 64px;
+}
+.icon-save-2x {
+  background-image: url(sprite.png);
+  background-position: -64px -64px;
+  width: 64px;
+  height: 64px;
+}
+.icon-screen-rotation-button {
+  background-image: url(sprite.png);
+  background-position: -112px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-skype {
+  background-image: url(sprite.png);
+  background-position: 0px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-snapchat {
+  background-image: url(sprite.png);
+  background-position: -144px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-social-network {
+  background-image: url(sprite.png);
+  background-position: -160px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-soundcloud {
+  background-image: url(sprite.png);
+  background-position: -176px -128px;
+  width: 16px;
+  height: 16px;
+}
+.icon-telegram {
+  background-image: url(sprite.png);
+  background-position: 0px -144px;
+  width: 16px;
+  height: 16px;
+}
+.icon-tumblr {
+  background-image: url(sprite.png);
+  background-position: -16px -144px;
+  width: 16px;
+  height: 16px;
+}
+.icon-twitter {
+  background-image: url(sprite.png);
+  background-position: -32px -144px;
+  width: 16px;
+  height: 16px;
+}
+.icon-youtube {
+  background-image: url(sprite.png);
+  background-position: -48px -144px;
+  width: 16px;
+  height: 16px;
+}
