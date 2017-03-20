@@ -82,8 +82,8 @@
                         if(i == j){
                             (function(n,m){
                                 $(btnMode[m]).on('click', function(){
-                                    if($(this).text().toLowerCase() === 'portraitmode'){
-                                        $(this).text('LandScapeMode');
+                                    if($(this).find('img').attr('alt').toLowerCase() === 'portraitmode'){
+                                        $(this).find('img').attr('alt','LandScapeMode');
                                         $(iphone[n]).css({
                                             'width' : 375,
                                             'height' : 662,
@@ -95,7 +95,7 @@
                                             'height' : 505
                                         });
                                     }else{
-                                        $(this).text('PortraitMode');
+                                        $(this).find('img').attr('alt','PortraitMode');
                                         $(iphone[n]).css({
                                             'width' : 662,
                                             'height' : 375,
