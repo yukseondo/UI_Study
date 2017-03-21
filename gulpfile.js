@@ -5,7 +5,8 @@ var imagemin = require('gulp-imagemin');
 var merge = require('merge-stream');
 var spritesmith = require('gulp.spritesmith');
 var server = require('gulp-server-livereload');
-// var sass = require('gulp-sass');
+var connect = require('gulp-connect');
+var sass = require('gulp-sass');
 
 // Define our tasks
 // gulp.task('sass', function generateSass () {
@@ -52,9 +53,25 @@ gulp.task('webserver', function(){
             // port: 8888
         }));
 });
-
-
 gulp.task('default', ['webserver']);
+
+// Webserver2
+// gulp.task('connect', function(){
+//     connect.server({
+//         root: './',
+//         livereload: true,
+//         port: 8001
+//     });
+// });
+// gulp.task('html', function(){
+//     gulp.src('./**/**/*.html')
+//         .pipe(connect.reload());
+// });
+// gulp.task('watch', function(){
+//     gulp.watch(['./**/**/*.html'], ['html']); // html 리로드
+// });
+//
+// gulp.task('default', ['connect','watch']);
 
 
 // https://bl.ocks.org/twolfson/860a1d47e483bc34e1fa (Retina)
