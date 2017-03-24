@@ -35,7 +35,7 @@ gulp.task('sprite', function () {
 
     // Pipe CSS stream through CSS optimizer and onto disk
     var cssStream = spriteData.css
-        //.pipe(csso()) //CSS를 압축한다.
+        .pipe(csso()) //CSS를 압축한다.
         .pipe(gulp.dest('css/'));
 
     // Return a merged stream to handle both `end` events

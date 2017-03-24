@@ -190,15 +190,15 @@
         output += '<br>';
     }
 
-//    for(var i=1; i<10; i++){
-//        for(var k=10; k>i; k--){
-//            output2 += '&nbsp;'
-//        }
-//        for(var j=1; j<i; j++){
-//            output2 += '*';
-//        }
-//        output2 += '<br>';
-//    }
+    for(var i=1; i<10; i++){
+        for(var k=10; k>i; k--){
+            output2 += '&nbsp;'
+        }
+        for(var j=1; j<i; j++){
+            output2 += '*';
+        }
+        output2 += '<br>';
+    }
     $('body').append('<div id="pyramidWrap"><div class="pyramid">' + output + '</div>' + '<div class="pyramid">' + output + '</div></div>' + '<div>'+output2 +'</div>');
 
     function add(x,y){
@@ -212,5 +212,7 @@
     .pyramid {position:absolute;left:78px;top:0;}
     .pyramid:nth-last-of-type(1) {left:0;transform:rotate3d(0,1,0, 180deg)}
 </style>
+
+가나다라마바사
 </body>
 </html>
