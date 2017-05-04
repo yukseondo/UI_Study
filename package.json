@@ -1,8 +1,11 @@
 {
-  "name": "ui",
+  "name": "alexsandoteam",
   "version": "1.0.0",
-  "description": "",
-  "main": "gulpfile.js",
+  "description": "alexsando ui test npm install",
+  "main": "./UI_Study",
+  "engines": {
+    "node": ">=0.10.0"
+  },
   "dependencies": {
     "webpack": "^2.2.1"
   },
@@ -12,6 +15,7 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-0": "^6.22.0",
+    "gulp-sassbeautify": "^0.1.0",
     "gulp-server-livereload": "^1.9.2",
     "gulp.spritesmith": "^6.3.0",
     "webpack": "^2.2.1"
@@ -23,8 +27,8 @@
     "type": "git",
     "url": "git+https://github.com/yukseondo/UI_Study.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Yuk SeonDo",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/yukseondo/UI_Study/issues"
   },

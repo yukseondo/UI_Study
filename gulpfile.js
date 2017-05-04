@@ -7,6 +7,8 @@ var spritesmith = require('gulp.spritesmith');
 var server = require('gulp-server-livereload');
 var connect = require('gulp-connect');
 var sass = require('gulp-sass');
+var sassbeautify = require('gulp-sassbeautify');
+
 
 // Define our tasks
 // gulp.task('sass', function generateSass () {
@@ -43,17 +45,17 @@ gulp.task('sprite', function () {
 });
 
 // gulp 서버 : https://www.npmjs.com/package/gulp-server-livereload
-gulp.task('webserver', function(){
-    gulp.src('./')
-        .pipe(server({
-            livereload: true,
-            open: true,
-            directoryListing: true
-            //defaultFile: 'index.html',
-            // port: 8888
-        }));
-});
-gulp.task('default', ['webserver']);
+// gulp.task('webserver', function(){
+//     gulp.src('./')
+//         .pipe(server({
+//             livereload: true,
+//             open: true,
+//             directoryListing: true
+//             //defaultFile: 'index.html',
+//             // port: 8888
+//         }));
+// });
+// gulp.task('default', ['webserver']);
 
 // Webserver2
 // gulp.task('connect', function(){

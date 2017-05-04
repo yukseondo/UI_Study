@@ -1,45 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>HTML</title>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="ui.js"></script>
-	<script src="inside.js"></script>
-	<style>
-		*{margin:0;padding:0;list-style:none;}
-		.contents {display:none;width:0;height:0;background-color:#efefef;-webkit-transition: width 2s, height 2s, background-color 2s;}
-		.contents.active {width:250px;height:250px;}
+    <meta charset="UTF-8">
+    <title>HTML</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="ui.js"></script>
+    <script src="inside.js"></script>
+    <style>
+        *{margin:0;padding:0;list-style:none;}
+        .contents {display:none;width:0;height:0;background-color:#efefef;-webkit-transition: width 2s, height 2s, background-color 2s;}
+        .contents.active {width:250px;height:250px;}
         #fixedWrap {border:1px solid red;}
-		#fixedUI {width:100%;background-color:#abdced;}
-		#accordion li {border-top:1px solid #ccc;}
-		#accordion a {display:block;height:35px;text-align:center;line-height:35px;}
+        #fixedUI {width:100%;background-color:#abdced;}
+        #accordion li {border-top:1px solid #ccc;}
+        #accordion a {display:block;height:35px;text-align:center;line-height:35px;}
         #accordion .ac_cont {display:none;background-color:#efefef;height:150px;}
-	</style>
+    </style>
 </head>
 <body>
-<div class="icon-facebook"></div>
-	<div id="wrap">
+<div class="icon-facebook"><button type="button">TEST</button><a focus>123123123132</a></div>
+    <div id="wrap">
         <!-- Tab UI -->
-		<div id="tabNav">
-			<ul id="tab_navi">
-				<li><a href="#c1">item1</a></li>
-				<li><a href="#c2">item2</a></li>
-				<li><a href="#c3">item3</a></li>
-			</ul>
-			<div id="c1" class="contents">1</div>
-			<div id="c2" class="contents">2</div>
-			<div id="c3" class="contents">3</div>
-		</div>
+        <div id="tabNav">
+            <ul id="tab_navi">
+                <li><a href="#c1">item1</a></li>
+                <li><a href="#c2">item2</a></li>
+                <li><a href="#c3">item3</a></li>
+            </ul>
+            <div id="c1" class="contents">1</div>
+            <div id="c2" class="contents">2</div>
+            <div id="c3" class="contents">3</div>
+        </div>
 
-		<!-- Fixed UI -->
+        <!-- Fixed UI -->
         <div id="fixedWrap">
             <div id="fixedUI">
                 FixedUI
             </div>
             <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         </div>
-111111        <!-- Accordion -->
+        <!-- Accordion -->
         <div id="accordion">
             <ul>
                 <li><a href="#">Q1</a><div class="ac_cont">cont1</div></li>
@@ -50,64 +50,179 @@
             </ul>
         </div>
 
-	</div>
+    </div>
+
+<iframe src="http://s-m.011st.com/MW/html/lego/component/accordion.html" class="cp_iframe" width="100%" height="505" border="0" frameborder="0"></iframe>
+<button class="cp_mview" type="button" data-url="http://s-m.011st.com/MW/html/lego/component/accordion.html">폰화면보기</button>
+
+<iframe src="http://s-m.011st.com/MW/html/lego/component/accordion.html" class="cp_iframe" width="100%" height="505" border="0" frameborder="0"></iframe>
+<button class="cp_mview" type="button" data-type="cp_card_deal" data-url="http://www.nate.com">폰화면보기</button>
+
+<div id="rotateLayer" style="display:none">
+    <div class="iphoneImg" style="width:375px;height:662px;margin:0 auto;padding:75px 0 0 17px;box-sizing:border-box;background:url('http://wiki.skplanet.com/download/attachments/111474671/iphone6-portrait3.png?version=1&modificationDate=1487927177000&api=v2') no-repeat 0 0">
+        <iframe src="about:blank" width="340" height="505" frameborder="0"></iframe>
+    </div>
+    <button type="button" class="pMode"><img src="http://wiki.skplanet.com/download/attachments/111474671/rotate-screen.png" alt="LandscapeMode"/></button>
+</div>
+<div id="rotateDim" style="display:none;position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.8);z-index:100;"></div>
+<button type="button" id="uidevScrollTop" style="display:none">TOP</button>
+
     <script>
         $(document).ready(function(){
             (function($){
-                var iphone6s = [], lpMode = [], iphone = $('.iphoneImg'), btnMode = $('.pMode'), landM = 'http://iphone6-landscape3.png', portM = 'http://iphone6-portrait3.png';
-                for(var i=0; i<iphone.length; i++){
-                    iphone6s.push($(iphone[i]).attr('class'));
-                    $(iphone[i]).attr('class', iphone6s[i]+i);
 
-                    for(var j=0; j<btnMode.length; j++){
-                        lpMode.push($(btnMode[j]).attr('class'));
-                        $(btnMode[j]).attr('class', lpMode[j]+j);
-
-                        if(i == j){
-                            (function(n,m){
-                                $(btnMode[m]).on('click', function(){
-                                    if($(this).find('img').attr('alt').toLowerCase() === 'portraitmode'){
-                                        $(this).find('img').attr('alt','LandScapeMode');
-                                        $(iphone[n]).css({
-                                            'width' : 375,
-                                            'height' : 662,
-                                            'paddingTop' : 75,
-                                            'paddingLeft' : 17,
-                                            'background-image': "url(" + portM + ")"
-                                        }).children('iframe').css({
-                                            'width' : 340,
-                                            'height' : 505
-                                        });
-                                    }else{
-                                        $(this).find('img').attr('alt','PortraitMode');
-                                        $(iphone[n]).css({
-                                            'width' : 662,
-                                            'height' : 375,
-                                            'paddingTop' : 15,
-                                            'paddingLeft' : 85,
-                                            'background-image': "url(" + landM + ")"
-                                        }).children('iframe').css({
-                                            'width' : 504,
-                                            'height' : 343
-                                        });
-                                    }
-                                })
-                            })(i,j);
+                function scrollControl(){
+                    var scrollBtn = $('#uidevScrollTop');
+                    $(window).on('scroll', function(){
+                        var currentScrollTop = $(window).scrollTop();
+                        console.log(currentScrollTop)
+                        if(currentScrollTop > $('#rotateLayer').offset().top){
+                            scrollBtn.show(500);
                         }
+                    });
+                    scrollBtn.on('click', function(){
+                        $('html body').stop().animate({scrollTop:0},500);
+                    })
+                }
+                scrollControl()
+
+                var cpFrameWrap = [], $cpFrames = $('.cp_iframe'), mobileArray = [], $mobileView = $('.cp_mview'), mobileLayer = $('#rotateLayer'), cpDimmed = $('#rotateDim'), iphone = mobileLayer.find('.iphoneImg'), btnMode = mobileLayer.find('.pMode'), landM = 'http://wiki.skplanet.com/download/attachments/111474671/iphone6-landscape3.png', portM = 'http://wiki.skplanet.com/download/attachments/111474671/iphone6-portrait3.png';
+                /* **
+                for(var k=0; k < $cpFrames.length; k++){
+                    cpFrameWrap.push($($cpFrames[k]).attr('class'));
+                    $($cpFrames[k]).attr('id', cpFrameWrap[k] + k);
+                }
+                for(var n=0; n < $mobileView.length; n++){
+                    mobileArray.push($($mobileView[n]).attr('class'));
+                    $($mobileView[n]).attr('id', mobileArray[n] + n);
+                }
+                ** */
+                var dealHTML = '';
+                    dealHTML += '<div id="dealCardDiv">';
+                        dealHTML += '<button type="button" data-card="card_a">딜형</button>';
+                        dealHTML += '<button type="button" data-card="card_b2">갤러리형</button>';
+                        dealHTML += '<button type="button" data-card="card_c">리스트형</button>';
+                        dealHTML += '<button type="button" data-card="card_d">큰이미지형</button>';
+                        dealHTML += '<button type="button" data-card="card_e">슬라이드</button>';
+                    dealHTML += '</div>';
+
+                var dealCardCh = {
+                    cardHTMLID : '#dealCardDiv',
+                    $cardIframe : '#rotateLayer iframe',
+                    that : this,
+                    showDeal : function() {
+                        $(this.cardHTMLID).find('button').each(function () {
+                            $(this).on('click', function () {
+                                $(dealCardCh.$cardIframe).attr('src', 'http://s-m.011st.com/MW/html/lego/component/' + $(this).attr('data-card') + '.html');
+                            })
+                        })
+                    },
+                    hideDeal : function(){
+                        $(this.cardHTMLID).remove();
+                    }
+                };
+
+                function overflowBody(){
+                    var cssBody = $('body');
+                    if(cssBody.css('overflow') == 'visible' || cssBody.css('overflow') == ''){
+                        cssBody.css('overflow', 'hidden')
+                    }else{
+                        cssBody.css('overflow','');
                     }
                 }
+
+                $mobileView.on('click', function(){
+                    if($(this).attr('data-type') == 'cp_card_deal'){
+                        $('#rotateLayer').append(dealHTML);
+                        dealCardCh.showDeal();
+                    }else{
+                        dealCardCh.hideDeal();
+                    }
+                    cpDimmed.show();
+                    overflowBody();
+                    mobileLayer.find('.iphoneImg').css({
+                        'display' : 'block',
+                        'zIndex': '1000',
+                        'position' : 'absolute',
+                        'top' : $(window).scrollTop() + 200,
+                        'left' : '50%',
+                        'webkit-transform' : 'translateX(-50%)'
+                    }).parent().show();
+                    btnMode.css({
+                        'position': 'fixed',
+                        'width' : '100%',
+                        'left' : '0',
+                        'top' : '0',
+                        'z-index' : '1000'
+                    });
+                    mobileLayer.find('iframe').attr('src', $(this).attr('data-url'));
+                    //document.getElementByName(프레임명).contentDocument.location.reload(true);
+                });
+
+                cpDimmed.on('click', function(){
+                    $(this).hide();
+                    mobileLayer.hide();
+                    dealCardCh.hideDeal();
+                    overflowBody();
+                    if(btnMode.find('img').attr('alt').toLowerCase() === 'portraitmode') btnMode.click();
+                });
+
+                btnMode.on('click', function(){
+                    if($(this).find('img').attr('alt').toLowerCase() === 'portraitmode'){
+                        $(this).find('img').attr('alt','LandScapeMode');
+                        iphone.css({
+                            'width' : 375,
+                            'height' : 662,
+                            'paddingTop' : 75,
+                            'paddingLeft' : 17,
+                            'background-image': "url(" + portM + ")"
+                        }).children('iframe').css({
+                            'width' : 340,
+                            'height' : 505
+                        });
+                    }else{
+                        $(this).find('img').attr('alt','PortraitMode');
+                        iphone.css({
+                            'width' : 662,
+                            'height' : 375,
+                            'paddingTop' : 15,
+                            'paddingLeft' : 85,
+                            'background-image': "url(" + landM + ")"
+                        }).children('iframe').css({
+                            'width' : 504,
+                            'height' : 343
+                        });
+                    }
+                })
+
+
 
             })(jQuery);
         })
 
     </script>
 
-	<script>
-		window.addEventListener('load', function(){
-			UI.tab('#tabNav');
-			UI.fixedUI('#fixedUI', '#fixedWrap');
-			UI.accordionUI('#accordion', '.ac_cont', true);
-		})
-	</script>
+    <script>
+        window.addEventListener('load', function(){
+            UI.tab('#tabNav');
+            UI.fixedUI('#fixedUI', '#fixedWrap');
+            UI.accordionUI('#accordion', '.ac_cont', true);
+        })
+    </script>
+    <div class="target">
+        <a href="#news1">OPEN CONTENT</a>
+    </div>
+    <div id="news1">
+        <div class="subContent">가나다라마바사아자차카타파하</div>
+    </div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <style>
+        .target {position:relative;height:500px;overflow:hidden;border:1px solid red;}
+        .target a {display:block;height:50px;}
+        #news1 {position:absolute;left:0;bottom:-100px;width:100%;height:100px;}
+        #news1 .subContent {position:absolute;left:0;bottom:0;width:100%;height:100px;opacity:0;-webkit-transition:3s;}
+        #news1:target {-webkit-transition:3s;}
+        #news1:target .subContent{opacity:1;bottom:50px;background:red;height:100px;}
+    </style>
 </body>
 </html>
