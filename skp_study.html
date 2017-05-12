@@ -5,26 +5,38 @@
     <title>Study</title>
     <style>
         *{margin:0;padding:0;list-style:none;}
-        .fixedGridOption {position:fixed;top:0;width:100%;background-color:#fff;z-index:10;}
+        .fixedGridOption {position:fixed;top:0;width:100%;background-color:#fff;z-index:101;}
         .fixedGridOption .optionBox {margin:0;border-bottom:2px solid rgba(0,0,0, .5);}
-        #grid_wrap {margin:20px;padding-top:20px;overflow:hidden;}
+        #gridContents .fixedGridOption .option_type {right:5px;top:5px;}
+        #grid_wrap {position:relative;margin:20px;padding-top:20px;}
+        #grid_wrap .l-grid, #grid_wrap .l-grid__row, #grid_wrap .l-grid__col {position:relative;}
         #grid_wrap .l-grid {border:2px solid #000;}
         #grid_wrap .l-grid__col {border:1px dashed rgba(0,0,0, .5);border-right:0;border-left:1px dashed rgba(0,0,0, .5);}
         #grid_wrap .l-grid__row {background:rgba(255,0,0, .5);}
         #grid_wrap .l-grid__col {background: rgba(87, 163, 255, .8);}
-        #grid_wrap .lGrid-title, #grid_wrap .lGrid__row-title,#grid_wrap .lGrid__col-title {display:none;position:absolute;left:50%;top:50%;text-align:center;font-size:20px;background-color:#fff;padding:0 10px;transform:translate(-50%,-50%);}
+        #grid_wrap .lGrid-title, #grid_wrap .lGrid__row-title, #grid_wrap .lGrid__col-title {display:none;position:absolute;text-align:center;font-size:16px;color:#333;padding:0 10px;}
+        #gridContents .option_type {position:absolute;right:5px;top:-13px;text-align:right;height:auto;overflow:hidden;margin-bottom:10px;z-index:10;}
+        #gridContents span.option, #gridContents span.type {display:inline-block;width:50px;height:25px;margin-left:10px;text-align:center;font-size:15px;color:#000;line-height:25px;background: rgb(227, 255, 69);}
+        #gridContents span.type {background: rgb(245, 193, 255);}
 
-        .optionBox {position:relative;overflow:hidden;margin:20px 0;border:1px dashed #000;}
+        .optionBox {overflow:hidden;margin:0 0 20px;border:1px dashed #000;}
         .optionBox > div {float:left;width:33.3%;height:100%;border-left:1px dashed #000;box-sizing:border-box;}
         .optionBox > div:first-child {border:0;}
         .optionBox h2 {position:absolute;left:10px;top:-15px;height:30px; padding:0 10px;background-color:#fff;font-size:20px;}
         .optionBox ul {overflow:hidden;}
         .optionBox li {position:relative;width:100%; height:40px;border-bottom:1px solid #ccc;line-height:20px;margin-right:10px; font-size:18px;-webkit-box-sizing: border-box;box-sizing: border-box;}
+        .optionBox li.option {background: rgba(227, 255, 69, 0.5);}
+        .optionBox li.type {background: rgba(245, 193, 255, 0.5);}
         .optionBox li input[type="checkbox"] {position:absolute;left:15px;top:15px;}
         .optionBox li label {display:block;padding:10px 10px 10px 40px;}
         .optionBox li label span {color: #ed52ac;font-size:14px;}
-        .c-testBox {position:relative;height:200px;background-color:#fff;}
-        #grid_wrap .c-testBox .lGrid__col-title {display:block;}
+        .l-grid__col .c-testBox {position:relative;height:200px;background-color:#fff;}
+        #grid_wrap .c-testBox .lGrid__row-title, #grid_wrap .c-testBox .lGrid__col-title {display:block;}
+        #grid_wrap .c-testBox .lGrid__row-title span, #grid_wrap .c-testBox .lGrid__col-title span {color:#f00;}
+        #grid_wrap .c-testBox .lGrid-title {}
+        #grid_wrap .c-testBox .lGrid__row-title {right:10px;top:20px;z-index:10;}
+        #grid_wrap .c-testBox .lGrid__col-title {width:100%;left:50%;top:50%;transform:translate(-50%,-50%);}
+
     </style>
     <link rel="stylesheet" href="http://s-m.011st.com/MW/css/common/base.css" />
     <link rel="stylesheet" href="http://s-m.011st.com/MW/css/skpui/skpui.min.css" />
@@ -65,13 +77,13 @@
 
                                 switch(optNum) {
                                     case opt1:
-                                        $('.lGrid-title').append('<span class="' + thisIDValue + '_tit">, ' + thisIDValue + '</span>');
+                                        $('.lGrid-title').append('<span class="' + thisIDValue + '_tit">' + thisIDValue + '</span>');
                                         break;
                                     case opt2:
-                                        $('.lGrid__row-title').append('<span class="' + thisIDValue + '_tit">, ' + thisIDValue + '</span>');
+                                        $('.lGrid__row-title').append('<span class="' + thisIDValue + '_tit">' + thisIDValue + '</span>');
                                         break;
                                     case opt3:
-                                        $('.lGrid__col-title').append('<span class="' + thisIDValue + '_tit">, ' + thisIDValue + '</span>');
+                                        $('.lGrid__col-title').append('<span class="' + thisIDValue + '_tit">' + thisIDValue + '</span>');
                                         break;
                                 }
 
@@ -91,7 +103,7 @@
                 PUIGird(opt2, lGridRow);
                 PUIGird(opt3, lGridCol);
 
-                var gridOptionWrap = $('#grid_wrap .l-grid').eq(0), GridOptionBox = $('#grid1'), GridOptionBoxWidth = GridOptionBox.width();
+                var gridOptionWrap = $('#grid_wrap .l-grid').eq(0), GridOptionBox = $('#optionBox'), GridOptionBoxWidth = GridOptionBox.width();
                 $(window).on('scroll', function(){
                     if($(window).scrollTop() > gridOptionWrap.offset().top){
                         GridOptionBox.addClass('fixedGridOption').css('width', GridOptionBoxWidth);
@@ -107,73 +119,78 @@
 <body>
     <div id="grid_wrap">
         <div id="gridContents">
-
             <div id="optionBox" class="optionBox">
+                <div class="option_type">
+                    <span class="option">option</span>
+                    <span class="type">type</span>
+                </div>
                 <div id="option1">
                     <ul>
-                        <li>
+                        <li class="option">
                             <input type="checkbox" id="l-grid--border" value="">
                             <label for="l-grid--border">l-grid--border <span>캐리어하단 border를 추가한다.</span></label>
                         </li>
-                        <li>
+                        <li class="option">
                             <input type="checkbox" id="l-grid--adjoin" value="">
                             <label for="l-grid--adjoin">l-grid--adjoin <span>캐리어간 간격을 삭제한다.</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid--step1" data-type="radioType" value="">
                             <label for="l-grid--step1">l-grid--step1 <span>좌우 여백 8px</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid--step2" data-type="radioType" value="">
                             <label for="l-grid--step2">l-grid--step2 <span>좌우 여백 16px</span></label>
                         </li>
+                        <li></li>
                         <li></li>
                     </ul>
                 </div>
                 <div id="option2">
                     <ul>
-                        <li>
+                        <li class="option">
                             <input type="checkbox" id="l-grid__row--border" value="">
                             <label for="l-grid__row--border">l-grid__row--border <span>row간 하단 border를 생성</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__row--step0" data-type="radioType" value="">
                             <label for="l-grid__row--step0">l-grid__row--step0 <span>상하 여백 0</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__row--step1" data-type="radioType" value="">
                             <label for="l-grid__row--step1">l-grid__row--step1 <span>상하 여백 8px</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__row--step2" data-type="radioType" value="">
                             <label for="l-grid__row--step2">l-grid__row--step2 <span>상하 여백 16px</span></label>
                         </li>
+                        <li></li>
                         <li></li>
                     </ul>
                 </div>
                 <div id="option3">
                     <ul>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__col--12" data-type="radioType" value="">
                             <label for="l-grid__col--12">l-grid__col--12 <span>100%영역을 차지한다.</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__col--6" data-type="radioType" value="">
                             <label for="l-grid__col--6">l-grid__col--6 <span>50%영역을 차지한다.</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__col--4" data-type="radioType" value="">
                             <label for="l-grid__col--4">l-grid__col--4 <span>33.3%영역을 차지한다.</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__col--3" data-type="radioType" value="">
                             <label for="l-grid__col--3">l-grid__col--3 <span>25%영역을 차지한다.</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__col--2" data-type="radioType" value="">
                             <label for="l-grid__col--2">l-grid__col--2 <span>16.6%영역을 차지한다.</span></label>
                         </li>
-                        <li>
+                        <li class="option">
                             <input type="checkbox" id="medium-3" value="">
                             <label for="medium-3">medium-3 <span>반응형 대응</span></label>
                         </li>
@@ -186,7 +203,7 @@
                 <div class="l-grid__row">
                     <h2 class="lGrid__row-title">l-grid__row</h2>
                     <div class="l-grid__col l-grid__col--12">
-                        <h3 class="lGrid__col-title">l-grid__col<span class="l-grid__col--12_tit">, l-grid__col--12</span></h3>
+                        <h3 class="lGrid__col-title">l-grid__col<span class="l-grid__col--12_tit"> l-grid__col--12</span></h3>
                         <div class="c-headline">
                             <div class="c-headline__text">
                                 <h3 class="c-headline__title">카테고리</h3>
@@ -197,7 +214,7 @@
                 <div class="l-grid__row">
                     <h2 class="lGrid__row-title">l-grid__row</h2>
                     <div class="l-grid__col l-grid__col--12">
-                        <h3 class="lGrid__col-title">l-grid__col<span class="l-grid__col--12_tit">, l-grid__col--12</span></h3>
+                        <h3 class="lGrid__col-title">l-grid__col<span class="l-grid__col--12_tit"> l-grid__col--12</span></h3>
                         <ul class="c-list c-list--border c-list__gallery" data-type="GridList_ImgText_Col2">
                             <li class="c-list__item">
                                 <a class="c-list__item-link" href="#">
@@ -271,7 +288,7 @@
             <div class="l-grid">
                 <h1 class="lGrid-title">l-grid</h1>
 
-                <h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--6_tit">, l-grid__col--6</span></h3>
+                <h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--6_tit"> l-grid__col--6</span></h3>
                 <ul class="l-grid__row">
                     <li class="l-grid__col l-grid__col--6">
                         <!-- card -->
@@ -353,105 +370,105 @@
                 <h1 class="lGrid-title">l-grid</h1>
 
                 <div class="l-grid__row">
-                    <h2 class="lGrid__row-title">l-grid__row</h2>
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
                     <div class="l-grid__col l-grid__col--4">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
                     </div>
                     <div class="l-grid__col l-grid__col--4">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
                     </div>
                     <div class="l-grid__col l-grid__col--4">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
                     </div>
                 </div>
                 <div class="l-grid__row">
-                    <h2 class="lGrid__row-title">l-grid__row</h2>
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
                     <div class="l-grid__col l-grid__col--4">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
-                    </div>
-                    <div class="l-grid__col l-grid__col--4">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
                     </div>
                     <div class="l-grid__col l-grid__col--4">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
                     </div>
-                </div>
-            </div>
-
-            <div class="l-grid">
-                <div class="l-grid__row">
-                    <h2 class="lGrid__row-title">l-grid__row</h2>
-                    <div class="l-grid__col l-grid__col--3">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">, l-grid__col--3</span></h3></div>
-                    </div>
-                    <div class="l-grid__col l-grid__col--3">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
-                    </div>
-                    <div class="l-grid__col l-grid__col--3">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
-                    </div>
-                    <div class="l-grid__col l-grid__col--3">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
-                    </div>
-                </div>
-                <div class="l-grid__row">
-                    <h2 class="lGrid__row-title">l-grid__row</h2>
-                    <div class="l-grid__col l-grid__col--3">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">, l-grid__col--3</span></h3></div>
-                    </div>
-                    <div class="l-grid__col l-grid__col--3">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
-                    </div>
-                    <div class="l-grid__col l-grid__col--3">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
-                    </div>
-                    <div class="l-grid__col l-grid__col--3">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
+                    <div class="l-grid__col l-grid__col--4">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
                     </div>
                 </div>
             </div>
 
             <div class="l-grid">
                 <div class="l-grid__row">
-                    <h2 class="lGrid__row-title">l-grid__row</h2>
-                    <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit"> l-grid__col--3</span></h3></div>
                     </div>
-                    <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
                     </div>
-                    <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
                     </div>
-                    <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                    </div>
-                    <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                    </div>
-                    <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
                     </div>
                 </div>
                 <div class="l-grid__row">
-                    <h2 class="lGrid__row-title">l-grid__row</h2>
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit"> l-grid__col--3</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="l-grid">
+                <div class="l-grid__row">
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
                     <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
                     </div>
                     <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
                     </div>
                     <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
                     </div>
                     <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
                     </div>
                     <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
                     </div>
                     <div class="l-grid__col l-grid__col--2">
-                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                </div>
+                <div class="l-grid__row">
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
                     </div>
                 </div>
             </div>
