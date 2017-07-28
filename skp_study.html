@@ -5,24 +5,38 @@
     <title>Study</title>
     <style>
         *{margin:0;padding:0;list-style:none;}
-        .fixedGridOption {position:fixed;top:0;left:0;width:100%;background-color:#fff;z-index:10;}
+        .fixedGridOption {position:fixed;top:0;width:100%;background-color:#fff;z-index:101;}
         .fixedGridOption .optionBox {margin:0;border-bottom:2px solid rgba(0,0,0, .5);}
-        #grid_wrap {margin:20px;padding-top:20px;overflow:hidden;}
-        #grid_wrap .l-grid, #grid_wrap .l-grid__row, #grid_wrap .l-grid__col {overflow:visible;position:relative;border:1px dashed rgba(0,0,0, .5);}
+        #gridContents .fixedGridOption .option_type {right:5px;top:5px;}
+        #grid_wrap {position:relative;margin:20px;padding-top:20px;}
+        #grid_wrap .l-grid, #grid_wrap .l-grid__row, #grid_wrap .l-grid__col {position:relative;}
+        #grid_wrap .l-grid {border:2px solid #000;}
+        #grid_wrap .l-grid__col {border:1px dashed rgba(0,0,0, .5);border-right:0;border-left:1px dashed rgba(0,0,0, .5);}
         #grid_wrap .l-grid__row {background:rgba(255,0,0, .5);}
-        #grid_wrap .l-grid__col {background:rgba(0,0,255, .5);}
-        #grid_wrap .lGrid-title, #grid_wrap .lGrid__row-title,#grid_wrap .lGrid__col-title {display:none;position:absolute;left:50%;top:50%;text-align:center;font-size:20px;background-color:#fff;padding:0 10px;transform:translate(-50%,-50%);}
+        #grid_wrap .l-grid__col {background: rgba(87, 163, 255, .8);}
+        #grid_wrap .lGrid-title, #grid_wrap .lGrid__row-title, #grid_wrap .lGrid__col-title {display:none;position:absolute;text-align:center;font-size:16px;color:#333;padding:0 10px;}
+        #gridContents .option_type {position:absolute;right:5px;top:-13px;text-align:right;height:auto;overflow:hidden;margin-bottom:10px;z-index:10;}
+        #gridContents span.option, #gridContents span.type {display:inline-block;width:50px;height:25px;margin-left:10px;text-align:center;font-size:15px;color:#000;line-height:25px;background: rgb(227, 255, 69);}
+        #gridContents span.type {background: rgb(245, 193, 255);}
 
-        .optionBox {position:relative;overflow:hidden;margin:20px 0;border:1px dashed #000;}
+        .optionBox {overflow:hidden;margin:0 0 20px;border:1px dashed #000;}
         .optionBox > div {float:left;width:33.3%;height:100%;border-left:1px dashed #000;box-sizing:border-box;}
         .optionBox > div:first-child {border:0;}
         .optionBox h2 {position:absolute;left:10px;top:-15px;height:30px; padding:0 10px;background-color:#fff;font-size:20px;}
         .optionBox ul {overflow:hidden;}
         .optionBox li {position:relative;width:100%; height:40px;border-bottom:1px solid #ccc;line-height:20px;margin-right:10px; font-size:18px;-webkit-box-sizing: border-box;box-sizing: border-box;}
+        .optionBox li.option {background: rgba(227, 255, 69, 0.5);}
+        .optionBox li.type {background: rgba(245, 193, 255, 0.5);}
         .optionBox li input[type="checkbox"] {position:absolute;left:15px;top:15px;}
         .optionBox li label {display:block;padding:10px 10px 10px 40px;}
-        .c-testBox {position:relative;height:200px;background-color:#fff;}
-        #grid_wrap .c-testBox .lGrid__col-title {display:block;}
+        .optionBox li label span {color: #ed52ac;font-size:14px;}
+        .l-grid__col .c-testBox {position:relative;height:200px;background-color:#fff;}
+        #grid_wrap .c-testBox .lGrid__row-title, #grid_wrap .c-testBox .lGrid__col-title {display:block;}
+        #grid_wrap .c-testBox .lGrid__row-title span, #grid_wrap .c-testBox .lGrid__col-title span {color:#f00;}
+        #grid_wrap .c-testBox .lGrid-title {}
+        #grid_wrap .c-testBox .lGrid__row-title {right:10px;top:20px;z-index:10;}
+        #grid_wrap .c-testBox .lGrid__col-title {width:100%;left:50%;top:50%;transform:translate(-50%,-50%);}
+
     </style>
     <link rel="stylesheet" href="http://s-m.011st.com/MW/css/common/base.css" />
     <link rel="stylesheet" href="http://s-m.011st.com/MW/css/skpui/skpui.min.css" />
@@ -31,15 +45,25 @@
     <!--<script src="inside.js"></script>-->
     <script>
         $(document).ready(function(){
-            (function($){
-                var lGrid = $('.l-grid'), lGridRow = $('.l-grid__row'), lGridCol = $('.l-grid__col'), opt1= $('#option1'), opt2 = $('#option2'), opt3 = $('#option3');
+            function selfReturn(){
+                var lGrid = $('.l-grid'), lGridRow = $('.l-grid__row'), lGridCol = $('.l-grid__col'), opt1= $('#option1'), opt2 = $('#option2'), opt3 = $('#option3'), cloneHTML = $('#gridContents').clone();
                 function PUIGird(optNum, gridType){
+                    var optName = $(optNum), checkBoxInput = $('#optionBox').find('input[type="checkbox"]'), radioTypeCheck = optName.find('input[data-type="radioType"]');
+                    var radioTypeArry = ['l-grid--step0','l-grid--step1','l-grid--step2','l-grid__row--step0','l-grid__row--step1','l-grid__row--step2','l-grid__row--step0','l-grid__row--step1','l-grid__row--step2','l-grid__col--12','l-grid__col--6','l-grid__col--4','l-grid__col--3','l-grid__col--2'];
+
+                    checkBoxInput.on('click', function(){
+                        if(checkBoxInput.is(":checked") === false){
+                            $('#gridContents').remove();
+                            $('#grid_wrap').append(cloneHTML);
+                            selfReturn();
+                        }
+                    });
+
                     $(optNum).find('input[type="checkbox"]').each(function(){
-                        var optName = $(optNum), checkBoxInput = optName.find('input[type="checkbox"]'), radioTypeCheck = optName.find('input[data-type="radioType"]');
-                        var radioTypeArry = ['l-grid--step0','l-grid--step1','l-grid--step2','l-grid__row--step0','l-grid__row--step1','l-grid__row--step2','l-grid__row--step0','l-grid__row--step1','l-grid__row--step2','l-grid__col--12','l-grid__col--6','l-grid__col--4','l-grid__col--3','l-grid__col--2'];
 
                         $(this).on('click', function(){
                             var thisChecked = $(this).is(":checked"), thisIDValue = $(this).attr('id');
+
                             if(thisChecked) {
                                 gridType.addClass(thisIDValue);
 
@@ -53,13 +77,13 @@
 
                                 switch(optNum) {
                                     case opt1:
-                                        $('.lGrid-title').append('<span class="' + thisIDValue + '_tit">, ' + thisIDValue + '</span>');
+                                        $('.lGrid-title').append('<span class="' + thisIDValue + '_tit">' + thisIDValue + '</span>');
                                         break;
                                     case opt2:
-                                        $('.lGrid__row-title').append('<span class="' + thisIDValue + '_tit">, ' + thisIDValue + '</span>');
+                                        $('.lGrid__row-title').append('<span class="' + thisIDValue + '_tit">' + thisIDValue + '</span>');
                                         break;
                                     case opt3:
-                                        $('.lGrid__col-title').append('<span class="' + thisIDValue + '_tit">, ' + thisIDValue + '</span>');
+                                        $('.lGrid__col-title').append('<span class="' + thisIDValue + '_tit">' + thisIDValue + '</span>');
                                         break;
                                 }
 
@@ -79,368 +103,373 @@
                 PUIGird(opt2, lGridRow);
                 PUIGird(opt3, lGridCol);
 
-                var gridOptionWrap = $('#grid_wrap .l-grid').eq(0), GridOptionBox = $('#grid1');
+                var gridOptionWrap = $('#grid_wrap .l-grid').eq(0), GridOptionBox = $('#optionBox'), GridOptionBoxWidth = GridOptionBox.width();
                 $(window).on('scroll', function(){
                     if($(window).scrollTop() > gridOptionWrap.offset().top){
-                        GridOptionBox.addClass('fixedGridOption');
+                        GridOptionBox.addClass('fixedGridOption').css('width', GridOptionBoxWidth);
                     }else{
-                        GridOptionBox.removeClass('fixedGridOption');
+                        GridOptionBox.removeClass('fixedGridOption').css('width', 'auto');
                     }
                 });
-            })(jQuery);
-
+            }
+            selfReturn();
         });
     </script>
 </head>
 <body>
     <div id="grid_wrap">
-        <div id="grid1" >
-
-            <div id="optionBox1" class="optionBox">
+        <div id="gridContents">
+            <div id="optionBox" class="optionBox">
+                <div class="option_type">
+                    <span class="option">option</span>
+                    <span class="type">type</span>
+                </div>
                 <div id="option1">
                     <ul>
-                        <li>
+                        <li class="option">
                             <input type="checkbox" id="l-grid--border" value="">
-                            <label for="l-grid--border">l-grid--border</label>
+                            <label for="l-grid--border">l-grid--border <span>캐리어하단 border를 추가한다.</span></label>
                         </li>
-                        <li>
+                        <li class="option">
                             <input type="checkbox" id="l-grid--adjoin" value="">
-                            <label for="l-grid--adjoin">l-grid--adjoin</label>
+                            <label for="l-grid--adjoin">l-grid--adjoin <span>캐리어간 간격을 삭제한다.</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid--step1" data-type="radioType" value="">
-                            <label for="l-grid--step1">l-grid--step1</label>
+                            <label for="l-grid--step1">l-grid--step1 <span>좌우 여백 8px</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid--step2" data-type="radioType" value="">
-                            <label for="l-grid--step2">l-grid--step2</label>
+                            <label for="l-grid--step2">l-grid--step2 <span>좌우 여백 16px</span></label>
                         </li>
+                        <li></li>
                         <li></li>
                     </ul>
                 </div>
                 <div id="option2">
                     <ul>
-                        <li>
+                        <li class="option">
                             <input type="checkbox" id="l-grid__row--border" value="">
-                            <label for="l-grid__row--border">l-grid__row--border</label>
+                            <label for="l-grid__row--border">l-grid__row--border <span>row간 하단 border를 생성</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__row--step0" data-type="radioType" value="">
-                            <label for="l-grid__row--step0">l-grid__row--step0</label>
+                            <label for="l-grid__row--step0">l-grid__row--step0 <span>상하 여백 0</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__row--step1" data-type="radioType" value="">
-                            <label for="l-grid__row--step1">l-grid__row--step1</label>
+                            <label for="l-grid__row--step1">l-grid__row--step1 <span>상하 여백 8px</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__row--step2" data-type="radioType" value="">
-                            <label for="l-grid__row--step2">l-grid__row--step2</label>
+                            <label for="l-grid__row--step2">l-grid__row--step2 <span>상하 여백 16px</span></label>
                         </li>
+                        <li></li>
                         <li></li>
                     </ul>
                 </div>
                 <div id="option3">
                     <ul>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__col--12" data-type="radioType" value="">
-                            <label for="l-grid__col--12">l-grid__col--12</label>
+                            <label for="l-grid__col--12">l-grid__col--12 <span>100%영역을 차지한다.</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__col--6" data-type="radioType" value="">
-                            <label for="l-grid__col--6">l-grid__col--6</label>
+                            <label for="l-grid__col--6">l-grid__col--6 <span>50%영역을 차지한다.</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__col--4" data-type="radioType" value="">
-                            <label for="l-grid__col--4">l-grid__col--4</label>
+                            <label for="l-grid__col--4">l-grid__col--4 <span>33.3%영역을 차지한다.</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__col--3" data-type="radioType" value="">
-                            <label for="l-grid__col--3">l-grid__col--3</label>
+                            <label for="l-grid__col--3">l-grid__col--3 <span>25%영역을 차지한다.</span></label>
                         </li>
-                        <li>
+                        <li class="type">
                             <input type="checkbox" id="l-grid__col--2" data-type="radioType" value="">
-                            <label for="l-grid__col--2">l-grid__col--2</label>
+                            <label for="l-grid__col--2">l-grid__col--2 <span>16.6%영역을 차지한다.</span></label>
                         </li>
-                        <li>
+                        <li class="option">
                             <input type="checkbox" id="medium-3" value="">
-                            <label for="medium-3">medium-3</label>
+                            <label for="medium-3">medium-3 <span>반응형 대응</span></label>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>
 
-        <div class="l-grid">
-            <h1 class="lGrid-title">l-grid</h1>
-            <div class="l-grid__row">
-                <h2 class="lGrid__row-title">l-grid__row</h2>
-                <div class="l-grid__col l-grid__col--12">
-                    <h3 class="lGrid__col-title">l-grid__col<span class="l-grid__col--12_tit">, l-grid__col--12</span></h3>
-                    <div class="c-headline">
-                        <div class="c-headline__text">
-                            <h3 class="c-headline__title">카테고리</h3>
+            <div class="l-grid">
+                <h1 class="lGrid-title">l-grid</h1>
+                <div class="l-grid__row">
+                    <h2 class="lGrid__row-title">l-grid__row</h2>
+                    <div class="l-grid__col l-grid__col--12">
+                        <h3 class="lGrid__col-title">l-grid__col<span class="l-grid__col--12_tit"> l-grid__col--12</span></h3>
+                        <div class="c-headline">
+                            <div class="c-headline__text">
+                                <h3 class="c-headline__title">카테고리</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="l-grid__row">
-                <h2 class="lGrid__row-title">l-grid__row</h2>
-                <div class="l-grid__col l-grid__col--12">
-                    <h3 class="lGrid__col-title">l-grid__col<span class="l-grid__col--12_tit">, l-grid__col--12</span></h3>
-                    <ul class="c-list c-list--border c-list__gallery" data-type="GridList_ImgText_Col2">
-                        <li class="c-list__item">
-                            <a class="c-list__item-link" href="#">
-                            <span class="c-list__icon">
-                                <img src="http://i.011st.com/ex_t/R/150x150/1/90/1/src/browsing/banner/2016/08/25/15014/2016082516562559935_9709521_1.png" alt="더모코스메틱">
-                            </span>
-                                더모코스메틱
-                            </a>
-                        </li>
-                        <li class="c-list__item">
-                            <a class="c-list__item-link" href="#">
-                            <span class="c-list__icon">
-                                <img src="http://i.011st.com/ex_t/R/150x150/1/90/1/src/browsing/banner/2016/08/25/15014/2016082516522524376_9709511_1.png" alt="명품화장품">
-                            </span>
-                                명품화장품
-                            </a>
-                        </li>
-                        <li class="c-list__item">
-                            <a class="c-list__item-link" href="#">
-                            <span class="c-list__icon">
-                                <img src="http://i.011st.com/ex_t/R/150x150/1/90/1/src/browsing/banner/2016/08/25/15014/2016082516542529120_9709515_1.png" alt="니치향수">
-                            </span>
-                                니치향수
-                            </a>
-                        </li>
-                        <li class="c-list__item">
-                            <a class="c-list__item-link" href="#">
-                            <span class="c-list__icon">
-                                <img src="http://i.011st.com/ex_t/R/150x150/1/90/1/src/browsing/banner/2016/05/26/15007/2016052616362612330_9602248_1.png" alt="에스테틱브랜드">
-                            </span>
-                                에스테틱브랜드
-                            </a>
-                        </li>
-                        <li class="c-list__item">
-                            <a class="c-list__item-link" href="#">
-                            <span class="c-list__icon">
-                                <img src="http://i.011st.com/ex_t/R/75x75/1/90/1/src/browsing/banner/2016/07/07/7562/2016070716580737498_9687412_1.jpg" alt="천연 유기농">
-                            </span>
-                                천연 유기농
-                            </a>
-                        </li>
-                        <li class="c-list__item">
-                            <a class="c-list__item-link" href="#">
-                            <span class="c-list__icon">
-                                <img src="http://i.011st.com/ex_t/R/75x75/1/90/1/src/browsing/banner/2016/07/07/7562/2016070716590754850_9687415_1.jpg" alt="싸이닉">
-                            </span>
-                                싸이닉
-                            </a>
-                        </li>
-                        <li class="c-list__item">
-                            <a class="c-list__item-link" href="#">
-                            <span class="c-list__icon">
-                                <img src="http://i.011st.com/ex_t/R/75x75/1/90/1/src/browsing/banner/2016/07/07/7562/2016070717000744393_9687416_1.png" alt="로드샵브랜드">
-                            </span>
-                                로드샵브랜드
-                            </a>
-                        </li>
-                        <li class="c-list__item">
-                            <a class="c-list__item-link" href="#">
-                            <span class="c-list__icon">
-                                <img src="http://i.011st.com/ex_t/R/75x75/1/90/1/src/browsing/banner/2016/07/07/7562/2016070717010711681_9687418_1.png" alt="맨즈 그루밍">
-                            </span>
-                                맨즈 그루밍
-                            </a>
-                        </li>
-                    </ul>
+                <div class="l-grid__row">
+                    <h2 class="lGrid__row-title">l-grid__row</h2>
+                    <div class="l-grid__col l-grid__col--12">
+                        <h3 class="lGrid__col-title">l-grid__col<span class="l-grid__col--12_tit"> l-grid__col--12</span></h3>
+                        <ul class="c-list c-list--border c-list__gallery" data-type="GridList_ImgText_Col2">
+                            <li class="c-list__item">
+                                <a class="c-list__item-link" href="#">
+                                <span class="c-list__icon">
+                                    <img src="http://i.011st.com/ex_t/R/150x150/1/90/1/src/browsing/banner/2016/08/25/15014/2016082516562559935_9709521_1.png" alt="더모코스메틱">
+                                </span>
+                                    더모코스메틱
+                                </a>
+                            </li>
+                            <li class="c-list__item">
+                                <a class="c-list__item-link" href="#">
+                                <span class="c-list__icon">
+                                    <img src="http://i.011st.com/ex_t/R/150x150/1/90/1/src/browsing/banner/2016/08/25/15014/2016082516522524376_9709511_1.png" alt="명품화장품">
+                                </span>
+                                    명품화장품
+                                </a>
+                            </li>
+                            <li class="c-list__item">
+                                <a class="c-list__item-link" href="#">
+                                <span class="c-list__icon">
+                                    <img src="http://i.011st.com/ex_t/R/150x150/1/90/1/src/browsing/banner/2016/08/25/15014/2016082516542529120_9709515_1.png" alt="니치향수">
+                                </span>
+                                    니치향수
+                                </a>
+                            </li>
+                            <li class="c-list__item">
+                                <a class="c-list__item-link" href="#">
+                                <span class="c-list__icon">
+                                    <img src="http://i.011st.com/ex_t/R/150x150/1/90/1/src/browsing/banner/2016/05/26/15007/2016052616362612330_9602248_1.png" alt="에스테틱브랜드">
+                                </span>
+                                    에스테틱브랜드
+                                </a>
+                            </li>
+                            <li class="c-list__item">
+                                <a class="c-list__item-link" href="#">
+                                <span class="c-list__icon">
+                                    <img src="http://i.011st.com/ex_t/R/75x75/1/90/1/src/browsing/banner/2016/07/07/7562/2016070716580737498_9687412_1.jpg" alt="천연 유기농">
+                                </span>
+                                    천연 유기농
+                                </a>
+                            </li>
+                            <li class="c-list__item">
+                                <a class="c-list__item-link" href="#">
+                                <span class="c-list__icon">
+                                    <img src="http://i.011st.com/ex_t/R/75x75/1/90/1/src/browsing/banner/2016/07/07/7562/2016070716590754850_9687415_1.jpg" alt="싸이닉">
+                                </span>
+                                    싸이닉
+                                </a>
+                            </li>
+                            <li class="c-list__item">
+                                <a class="c-list__item-link" href="#">
+                                <span class="c-list__icon">
+                                    <img src="http://i.011st.com/ex_t/R/75x75/1/90/1/src/browsing/banner/2016/07/07/7562/2016070717000744393_9687416_1.png" alt="로드샵브랜드">
+                                </span>
+                                    로드샵브랜드
+                                </a>
+                            </li>
+                            <li class="c-list__item">
+                                <a class="c-list__item-link" href="#">
+                                <span class="c-list__icon">
+                                    <img src="http://i.011st.com/ex_t/R/75x75/1/90/1/src/browsing/banner/2016/07/07/7562/2016070717010711681_9687418_1.png" alt="맨즈 그루밍">
+                                </span>
+                                    맨즈 그루밍
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="l-grid">
-            <h1 class="lGrid-title">l-grid</h1>
+            <div class="l-grid">
+                <h1 class="lGrid-title">l-grid</h1>
 
-            <h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--6_tit">, l-grid__col--6</span></h3>
-            <ul class="l-grid__row">
-                <li class="l-grid__col l-grid__col--6">
-                    <!-- card -->
-                    <a href="#" class="c-card c-card__gallery" data-type="ProductGrid_Ranking">
-                    <span class="c-card__thumb">
-                        <img src="http://dummyimage.com/312x312/d8d8d8/536dfe.png&amp;text=312+x+312+Card+B" alt="">
-                    </span>
-                        <div class="c-card__info" data-type="Info_B_01">
-                            <span class="c-card__name">[가을신상! 최다판매]프리미엄 청바지~! 남자남성/슬림부츠컷/블랙스키니진/의류옷청바지</span>
-                            <span class="c-card__rate"><strong>30%</strong></span>
-                            <div class="c-card__price">
-                                <strong>99,999,999</strong> 원
-                                <del>312,000원</del>
+                <h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--6_tit"> l-grid__col--6</span></h3>
+                <ul class="l-grid__row">
+                    <li class="l-grid__col l-grid__col--6">
+                        <!-- card -->
+                        <a href="#" class="c-card c-card__gallery" data-type="ProductGrid_Ranking">
+                        <span class="c-card__thumb">
+                            <img src="http://dummyimage.com/312x312/d8d8d8/536dfe.png&amp;text=312+x+312+Card+B" alt="">
+                        </span>
+                            <div class="c-card__info" data-type="Info_B_01">
+                                <span class="c-card__name">[가을신상! 최다판매]프리미엄 청바지~! 남자남성/슬림부츠컷/블랙스키니진/의류옷청바지</span>
+                                <span class="c-card__rate"><strong>30%</strong></span>
+                                <div class="c-card__price">
+                                    <strong>99,999,999</strong> 원
+                                    <del>312,000원</del>
+                                </div>
+                                <span class="c-card__benefit"><strong>내맘대로11%</strong> 무료배송</span>
                             </div>
-                            <span class="c-card__benefit"><strong>내맘대로11%</strong> 무료배송</span>
-                        </div>
-                    </a>
-                    <!-- //card -->
-                </li>
-                <li class="l-grid__col l-grid__col--6">
-                    <!-- card -->
-                    <a href="#" class="c-card c-card__gallery" data-type="ProductGrid_Ranking">
-                    <span class="c-card__thumb">
-                        <img src="http://dummyimage.com/312x312/d8d8d8/536dfe.png&amp;text=312+x+312+Card+B" alt="">
-                    </span>
-                        <div class="c-card__info" data-type="Info_B_01">
-                            <span class="c-card__name">[가을신상! 최다판매]프리미엄 청바지~! 남자남성/슬림부츠컷/블랙스키니진/의류옷청바지</span>
-                            <span class="c-card__rate"><strong>30%</strong></span>
-                            <div class="c-card__price">
-                                <strong>99,999,999</strong> 원
-                                <del>312,000원</del>
+                        </a>
+                        <!-- //card -->
+                    </li>
+                    <li class="l-grid__col l-grid__col--6">
+                        <!-- card -->
+                        <a href="#" class="c-card c-card__gallery" data-type="ProductGrid_Ranking">
+                        <span class="c-card__thumb">
+                            <img src="http://dummyimage.com/312x312/d8d8d8/536dfe.png&amp;text=312+x+312+Card+B" alt="">
+                        </span>
+                            <div class="c-card__info" data-type="Info_B_01">
+                                <span class="c-card__name">[가을신상! 최다판매]프리미엄 청바지~! 남자남성/슬림부츠컷/블랙스키니진/의류옷청바지</span>
+                                <span class="c-card__rate"><strong>30%</strong></span>
+                                <div class="c-card__price">
+                                    <strong>99,999,999</strong> 원
+                                    <del>312,000원</del>
+                                </div>
+                                <span class="c-card__benefit"><strong>내맘대로11%</strong> 무료배송</span>
                             </div>
-                            <span class="c-card__benefit"><strong>내맘대로11%</strong> 무료배송</span>
-                        </div>
-                    </a>
-                    <!-- //card -->
-                </li>
-                <li class="l-grid__col l-grid__col--6">
-                    <!-- card -->
-                    <a href="#" class="c-card c-card__gallery" data-type="ProductGrid_Ranking">
-                    <span class="c-card__thumb">
-                        <img src="http://dummyimage.com/312x312/d8d8d8/536dfe.png&amp;text=312+x+312+Card+B" alt="">
-                    </span>
-                        <div class="c-card__info" data-type="Info_B_01">
-                            <span class="c-card__name">[가을신상! 최다판매]프리미엄 청바지~! 남자남성/슬림부츠컷/블랙스키니진/의류옷청바지</span>
-                            <span class="c-card__rate"><strong>30%</strong></span>
-                            <div class="c-card__price">
-                                <strong>99,999,999</strong> 원
-                                <del>312,000원</del>
+                        </a>
+                        <!-- //card -->
+                    </li>
+                    <li class="l-grid__col l-grid__col--6">
+                        <!-- card -->
+                        <a href="#" class="c-card c-card__gallery" data-type="ProductGrid_Ranking">
+                        <span class="c-card__thumb">
+                            <img src="http://dummyimage.com/312x312/d8d8d8/536dfe.png&amp;text=312+x+312+Card+B" alt="">
+                        </span>
+                            <div class="c-card__info" data-type="Info_B_01">
+                                <span class="c-card__name">[가을신상! 최다판매]프리미엄 청바지~! 남자남성/슬림부츠컷/블랙스키니진/의류옷청바지</span>
+                                <span class="c-card__rate"><strong>30%</strong></span>
+                                <div class="c-card__price">
+                                    <strong>99,999,999</strong> 원
+                                    <del>312,000원</del>
+                                </div>
+                                <span class="c-card__benefit"><strong>내맘대로11%</strong> 무료배송</span>
                             </div>
-                            <span class="c-card__benefit"><strong>내맘대로11%</strong> 무료배송</span>
-                        </div>
-                    </a>
-                    <!-- //card -->
-                </li>
-                <li class="l-grid__col l-grid__col--6">
-                    <!-- card -->
-                    <a href="#" class="c-card c-card__gallery" data-type="ProductGrid_Ranking">
-                    <span class="c-card__thumb">
-                        <img src="http://dummyimage.com/312x312/d8d8d8/536dfe.png&amp;text=312+x+312+Card+B" alt="">
-                    </span>
-                        <div class="c-card__info" data-type="Info_B_01">
-                            <span class="c-card__name">[가을신상! 최다판매]프리미엄 청바지~! 남자남성/슬림부츠컷/블랙스키니진/의류옷청바지</span>
-                            <span class="c-card__rate"><strong>30%</strong></span>
-                            <div class="c-card__price">
-                                <strong>99,999,999</strong> 원
-                                <del>312,000원</del>
+                        </a>
+                        <!-- //card -->
+                    </li>
+                    <li class="l-grid__col l-grid__col--6">
+                        <!-- card -->
+                        <a href="#" class="c-card c-card__gallery" data-type="ProductGrid_Ranking">
+                        <span class="c-card__thumb">
+                            <img src="http://dummyimage.com/312x312/d8d8d8/536dfe.png&amp;text=312+x+312+Card+B" alt="">
+                        </span>
+                            <div class="c-card__info" data-type="Info_B_01">
+                                <span class="c-card__name">[가을신상! 최다판매]프리미엄 청바지~! 남자남성/슬림부츠컷/블랙스키니진/의류옷청바지</span>
+                                <span class="c-card__rate"><strong>30%</strong></span>
+                                <div class="c-card__price">
+                                    <strong>99,999,999</strong> 원
+                                    <del>312,000원</del>
+                                </div>
+                                <span class="c-card__benefit"><strong>내맘대로11%</strong> 무료배송</span>
                             </div>
-                            <span class="c-card__benefit"><strong>내맘대로11%</strong> 무료배송</span>
-                        </div>
-                    </a>
-                    <!-- //card -->
-                </li>
-            </ul>
+                        </a>
+                        <!-- //card -->
+                    </li>
+                </ul>
 
-        </div>
+            </div>
 
-        <div class="l-grid">
-            <h1 class="lGrid-title">l-grid</h1>
+            <div class="l-grid">
+                <h1 class="lGrid-title">l-grid</h1>
 
-            <div class="l-grid__row">
-                <h2 class="lGrid__row-title">l-grid__row</h2>
-                <div class="l-grid__col l-grid__col--4">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
+                <div class="l-grid__row">
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
+                    <div class="l-grid__col l-grid__col--4">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--4">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--4">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
+                    </div>
                 </div>
-                <div class="l-grid__col l-grid__col--4">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--4">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
+                <div class="l-grid__row">
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
+                    <div class="l-grid__col l-grid__col--4">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--4">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--4">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--4_tit">l-grid__col--4</span></h3></div>
+                    </div>
                 </div>
             </div>
-            <div class="l-grid__row">
-                <h2 class="lGrid__row-title">l-grid__row</h2>
-                <div class="l-grid__col l-grid__col--4">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--4">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--4">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--4_tit">,l-grid__col--4</span></h3></div>
-                </div>
-            </div>
-        </div>
 
-        <div class="l-grid">
-            <div class="l-grid__row">
-                <h2 class="lGrid__row-title">l-grid__row</h2>
-                <div class="l-grid__col l-grid__col--3">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">, l-grid__col--3</span></h3></div>
+            <div class="l-grid">
+                <div class="l-grid__row">
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit"> l-grid__col--3</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
+                    </div>
                 </div>
-                <div class="l-grid__col l-grid__col--3">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--3">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--3">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
+                <div class="l-grid__row">
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit"> l-grid__col--3</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--3">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--3_tit">l-grid__col--3</span></h3></div>
+                    </div>
                 </div>
             </div>
-            <div class="l-grid__row">
-                <h2 class="lGrid__row-title">l-grid__row</h2>
-                <div class="l-grid__col l-grid__col--3">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">, l-grid__col--3</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--3">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--3">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--3">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--3_tit">,l-grid__col--3</span></h3></div>
-                </div>
-            </div>
-        </div>
 
-        <div class="l-grid">
-            <div class="l-grid__row">
-                <h2 class="lGrid__row-title">l-grid__row</h2>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+            <div class="l-grid">
+                <div class="l-grid__row">
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
                 </div>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                </div>
-            </div>
-            <div class="l-grid__row">
-                <h2 class="lGrid__row-title">l-grid__row</h2>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
-                </div>
-                <div class="l-grid__col l-grid__col--2">
-                    <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col <span class="l-grid__col--2_tit">, l-grid__col--2</span></h3></div>
+                <div class="l-grid__row">
+                    <div class="c-testBox"><h2 class="lGrid__row-title">l-grid__row, </h2></div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
+                    <div class="l-grid__col l-grid__col--2">
+                        <div class="c-testBox"><h3 class="lGrid__col-title">l-grid__col, <span class="l-grid__col--2_tit">l-grid__col--2</span></h3></div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>animation</title>
+    <style>
+        #animation {display:flex;flex:0 1 auto;align-items:center;justify-content: space-around;}
+        a, button {overflow:hidden;position:relative;display:block;width:100px;height:40px;border:0;background:none #000;color:#fff;font-size:16px;text-decoration:none;text-align:center;}
+        a {line-height:40px;transition:.4s;}
+        .a1:after {position:absolute;content:'';background-color:#777;opacity:0;margin:-100% 0 0 -100%;padding:300% 0 0 300%;transition:.8s;}
+        .a1:active:after {opacity:1;margin:0;padding:0;transition:0s;}
+        .a2 {box-shadow:0 9px 0 #666;}
+        .a2:active {box-shadow:0 4px 0 #666;transform:translateY(5px);}
+    </style>
+</head>
+<body>
+    <div id="animation">
+        <a href="#" class="a1">LINK</a>
+        <button type="button" class="a2">LINK</button>
+    </div>
+</body>
+</html>
