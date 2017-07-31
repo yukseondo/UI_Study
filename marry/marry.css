@@ -71,6 +71,7 @@ table {
 #marriage_title {margin:20px 0;font-size:14px;color:#333;}
 #marriage_greeting {margin:20px 0;padding-bottom:20px;line-height:18px;font-size:12px;border-bottom:1px dashed #ccc;}
 #marriage_img {margin:0 auto;width:100%;}
+#iframeGuest a {display:block;height:35px;margin:10px 0;line-height:35px;font-size:16px;background-color:#ccc;text-align:center;color:#111;text-decoration:none;}
 .marriage_stay {margin:20px 0;padding-bottom:20px;border-bottom:1px dashed #ccc;}
 .marriage_stay p {margin-top:10px;font-size:18px;}
 .people_list {margin:20px 0;overflow:hidden;color:#f00;}

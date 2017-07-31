@@ -11,8 +11,6 @@
             }else if((countryCode.toLowerCase() === 'jp')) {
                 htmlLanguage = $('html').attr('lang', 'ja');
             }
-            
-            console.log(countryCode.toLowerCase())
 
             // getData
             $.ajax({  
@@ -33,7 +31,8 @@
                     getMarriageSubwayLine4 =  $('#marriageSubwayLine4'),
                     getMarriageAddress = $('#marriageAddress'),
                     getMarriageTel = $('#marriageTel'),
-                    getSiteTitle = $('title');
+                    getSiteTitle = $('title'),
+                    getMessage = $("iframeGuestMessage");
 
                 // var countryJsonLang = countryCodeVal === 'KR' || htmlLanguage === 'ko' ? 'langko' : 'langjp';
                 
@@ -72,6 +71,7 @@
                     getMarriageAddress.html(dataJSON.langko.address);
                     getMarriageTel.html(dataJSON.langko.tel);
                     getSiteTitle.text(dataJSON.langko.title);
+                    getMessage.text(dataJSON.langko.message);
 
                 }
                 
@@ -110,6 +110,7 @@
                     getMarriageAddress.html(dataJSON.langjp.address);
                     getMarriageTel.html(dataJSON.langjp.tel);
                     getSiteTitle.text(dataJSON.langjp.title);
+                    getMessage.text(dataJSON.langjp.message);
                 }
 
                 $("#htmlDOM").html(htmlCode);

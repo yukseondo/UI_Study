@@ -23,7 +23,8 @@
         "parents_title1" : "신랑측 혼주",
         "parents_title2" : "신부측 혼주",
         "seondo" : "육선도",
-        "shoko" : "하마무라쇼코"
+        "shoko" : "하마무라쇼코",
+        "message" : "축하 메세지 남기기"
     },
 
     "langjp" : {
@@ -49,5 +50,6 @@
         "parents_title2" : "新婦両親",
         "seondo" : "陸善道",
         "shoko" : "濱村祥子"
+        "message" : "お祝いメッセージ残す"
     }
 }
