@@ -33,7 +33,7 @@
                     getMarriageAddress = $('#marriageAddress'),
                     getMarriageTel = $('#marriageTel'),
                     getSiteTitle = $('title'),
-                    getMessage = $("iframeGuestMessage");
+                    getMessage = $("#guest_msg");
 
                 // var countryJsonLang = countryCodeVal === 'KR' || htmlLanguage === 'ko' ? 'langko' : 'langjp';
 

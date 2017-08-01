@@ -5,11 +5,11 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width, target-densitydpi=medium-dpi">
     <title>육선도·하마무라쇼코의 결혼식에 초대합니다</title>
     <meta property="og:url" content="http://yukseondo.dothome.co.kr/marry/index.html">
-    <meta property="og:title" content="육선도·하마무라쇼코 결혼식 청첩장">  
+    <meta property="og:title" content="육선도·하마무라쇼코 결혼식 청첩장">
     <meta property="og:type" content="website">
     <meta property="og:image" content="http://yukseondo.dothome.co.kr/marry/img/sample.jpg">
     <meta property="og:description" content="육선도·하마무라쇼코의 결혼식에 초대합니다.">
-   
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="getTitle.js"></script>
     <script charset="UTF-8" class="daum_roughmap_loader_script" src="http://dmaps.daum.net/map_js_init/roughmapLoader.js"></script>
@@ -37,7 +37,7 @@
             <a href="img/7.jpg"><img src="img/7.jpg"></a>
         </div>
     </div>
-    
+
     <div id="map">
         <div id="daumRoughmapContainer1501237294692" class="root_daum_roughmap root_daum_roughmap_landing"></div>
     </div>
@@ -51,7 +51,83 @@
     </div>
 
     <!-- <div id="iframeGuest"><iframe id="iframeGuestBoard" src="http://users3.smartgb.com/g/g.php?a=s&i=g36-27094-ee" width="100%" height="auto" scrolling="no" frameborder="0"></iframe></div> -->
-    <div id="iframeGuest"><a id="iframeGuestMessage" href="http://users3.smartgb.com/g/g.php?a=s&i=g36-27094-ee">축하 메세지 남기기</a></div>
+    <!-- <div id="iframeGuest"><a id="iframeGuestMessage" href="http://users3.smartgb.com/g/g.php?a=s&i=g36-27094-ee">축하 메세지 남기기</a></div> -->
+
+    <script type="text/javascript">
+        var _guestHtml = "";
+
+        function callGuestList(isRefresh) {
+            if(isRefresh === true ) {
+                _guestHtml = '';
+            }
+
+            $.ajax({
+                type:"GET",
+                url:"../bbs/bbs/json.php",
+                success:function(response) {
+                    $.each(response.data, function() {
+                        _guestHtml += '<li><p>';
+                        _guestHtml += '<strong>' + $(this)[0].wr_name + '</strong> <span>' + $(this)[0].wr_datetime + '</span>';
+                        _guestHtml += '</p>';
+                        _guestHtml += '<p>' + $(this)[0].wr_content + '</p>';
+                        _guestHtml += '</li>';
+                    });
+
+                    $("#guestList").html(_guestHtml);
+                },
+                error:function(e){
+                    alert(e.responseText);
+                }
+            });
+        }
+
+
+        callGuestList();
+
+        
+    </script>
+    <div class="guest_list_wrap">
+        <h2 id="guest_msg">축하 메세지</h2>
+        <form id="guestWrite">
+            <div class="labels"><label for="wr_name">name:</label> <input type="text" class="iptxt" id="wr_name"></div>
+            <div class="labels"><label for="wr_content">Message:</label> <textarea id="wr_content" cols="30" rows="5"></textarea></div>
+            <div class="post_message"><button type="submit">Post Message</button></div>
+        </form>
+        <ul id="guestList">
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var guestWrite = $("#guestWrite");
+        guestWrite.submit(function(e) {
+            e.preventDefault();
+
+            if ( $(this).find("#wr_name").val() === "" ) {
+                alert("이름을 입력해 주세요");
+                return false;
+            }
+
+            if ( $(this).find("#wr_content").val() === "" ) {
+                alert("내용을 입력해 주세요");
+                return false;
+            }
+
+            $.ajax({
+              url: "../bbs/bbs/write_update_api.php",
+              type: "POST",
+              contentType: "application/x-www-form-urlencoded; charset=utf-8",
+              dataType: "json",
+              data: JSON.stringify({
+                wr_name : $("#wr_name").val(),
+                wr_content : $("#wr_content").val(),
+              }),
+              success: function(response) {
+                console.log(response);
+
+                callGuestList(true);
+             }
+            });
+        });
+    </script>
 
     <script charset="UTF-8">
         new daum.roughmap.Lander({

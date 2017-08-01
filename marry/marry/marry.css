@@ -95,3 +95,20 @@ table {
 @media screen and (min-width:430px) {
     #marriage_title {font-size:20px;}
 }
+
+.guest_list_wrap {border-top:1px solid #ccc;}
+.guest_list_wrap #guest_msg {padding:10px; font-size:16px;color:#333;}
+#guestWrite {padding:5px 15px 15px;}
+#guestWrite .labels {display:table;table-layout: fixed;margin-top:10px;}
+#guestWrite .labels label {display:table-cell;width:100px;vertical-align:top;font-size:14px;}
+#guestWrite .labels input, #guestWrite .labels textarea {display:table-cell;width:100%;vertical-align:top;font-size:14px;}
+#guestWrite .iptxt {width:100%;border:1px solid #ccc;}
+#guestWrite textarea {border:1px solid #ccc;resize:none;}
+.post_message {display:block;width:100%;margin-top:15px;text-align:center;}
+.post_message button {width:100%;background-color:#000;color:#fff;height:30px;font-size:14px;border:0;}
+
+#guestList {overflow:hidden;}
+#guestList li {padding:10px;border-bottom:1px solid #ccc;}
+#guestList li p {margin-top:5px;font-size:14px;}
+#guestList li p  strong {font-weight:bold;}
+#guestList li p  span {font-size:12px;color:#999;}
