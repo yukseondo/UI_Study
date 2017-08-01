@@ -3,7 +3,7 @@
 
         // getCountryCode
         $.get("http://ipinfo.io", function(response) {
-            
+
             var countryCode = response.country, htmlLanguage;
 
             // langSetting
@@ -13,27 +13,28 @@
                 htmlLanguage = $('html').attr('lang', 'ja');
             }
 
+
             // getData
-            $.ajax({  
+            $.ajax({
                 url: "kjtext_json.js",
                 dataType : "json",
                 success:function(data){
                     getDataText.init(data, countryCode);
                 }
             });
-            
+
         }, "jsonp");
-        
+
         var getDataText = {
             "setTextCode" : function(dataJSON, countryCodeVal) {
-                
-                var htmlCode = '', 
+
+                var htmlCode = '',
                     getMarriageSubwayLine2 = $('#marriageSubwayLine2'),
                     getMarriageSubwayLine4 =  $('#marriageSubwayLine4'),
                     getMarriageAddress = $('#marriageAddress'),
                     getMarriageTel = $('#marriageTel'),
                     getSiteTitle = $('title'),
-                    getMessage = $("#guest_msg");
+                    getMessage = $("iframeGuestMessage");
 
                 // var countryJsonLang = countryCodeVal === 'KR' || htmlLanguage === 'ko' ? 'langko' : 'langjp';
 
@@ -80,9 +81,9 @@
                 getSiteTitle.text(_data.title);
                 getMessage.text(_data.message);
 
-                
-                
-                
+
+
+
 
                 $("#htmlDOM").html(htmlCode);
             },

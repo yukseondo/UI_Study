@@ -54,37 +54,66 @@
     <!-- <div id="iframeGuest"><a id="iframeGuestMessage" href="http://users3.smartgb.com/g/g.php?a=s&i=g36-27094-ee">축하 메세지 남기기</a></div> -->
 
     <script type="text/javascript">
-        var _guestHtml = "";
+        var _guestHtml = "",
+            paging = 0,
+            jsonCallPending = false,
+            isLastPage = false;
 
         function callGuestList(isRefresh) {
+            jsonCallPending = true;
+
             if(isRefresh === true ) {
                 _guestHtml = '';
+                paging = 0;
+                isLastPage = false;
             }
 
-            $.ajax({
-                type:"GET",
-                url:"../bbs/bbs/json.php",
-                success:function(response) {
-                    $.each(response.data, function() {
-                        _guestHtml += '<li><p>';
-                        _guestHtml += '<strong>' + $(this)[0].wr_name + '</strong> <span>' + $(this)[0].wr_datetime + '</span>';
-                        _guestHtml += '</p>';
-                        _guestHtml += '<p>' + $(this)[0].wr_content + '</p>';
-                        _guestHtml += '</li>';
-                    });
+            if ( jsonCallPending && !isLastPage) {
+                $.ajax({
+                    type: "POST",
+                    url:"../bbs/bbs/json.php",
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        paging : paging,
+                    }),
+                    success:function(response) {
+                        if ( response.length === 0 ) {
+                            isLastPage = true;
+                            return false;
+                        }
 
-                    $("#guestList").html(_guestHtml);
-                },
-                error:function(e){
-                    alert(e.responseText);
-                }
-            });
+                        if ( response.data.length < 10 ) {
+                            isLastPage = true;
+                        }
+
+                        $.each(response.data, function() {
+                            _guestHtml += '<li><p>';
+                            _guestHtml += '<strong>' + $(this)[0].wr_name + '</strong> <span>' + $(this)[0].wr_datetime + '</span>';
+                            _guestHtml += '</p>';
+                            _guestHtml += '<p>' + $(this)[0].wr_content + '</p>';
+                            _guestHtml += '</li>';
+                        });
+                        $("#guestList").html(_guestHtml);
+                        paging = paging + 1;
+                        jsonCallPending = false;
+                    }
+                });
+            }
         }
+        callGuestList(false, paging);
+
+        var $document = $(document);
+        $document.on('scroll', function() {
+            var $documentHeight = $document.height(),
+                $documentScrollTop = $document.scrollTop()
+                $nowScrollTop = $documentHeight - $(window).height();
 
 
-        callGuestList();
-
-        
+            if ( ( $nowScrollTop - $documentScrollTop ) < 300  && !jsonCallPending && !isLastPage) {
+                callGuestList(false, paging);
+            }
+        });
     </script>
     <div class="guest_list_wrap">
         <h2 id="guest_msg">축하 메세지</h2>
