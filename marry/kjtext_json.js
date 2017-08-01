@@ -49,7 +49,7 @@
         "parents_title1" : "新郎両親",
         "parents_title2" : "新婦両親",
         "seondo" : "陸善道",
-        "shoko" : "濱村祥子"
+        "shoko" : "濱村祥子",
         "message" : "お祝いメッセージ残す"
     }
 }
