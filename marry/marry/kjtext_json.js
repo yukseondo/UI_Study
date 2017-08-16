@@ -1,5 +1,5 @@
 {
-    "commonImg" : "visual.jpg",
+    "commonImg" : "visual2.jpg",
 
     "langko" : {
         "title" : "<육선도·하마무라쇼코의 결혼식에 초대합니다>",
