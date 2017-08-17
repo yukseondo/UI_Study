@@ -66,6 +66,7 @@ table {
 #googleMap {width:100%;}
 #googleMap > p {margin:15px 0;line-height:20px;font-size:16px;text-align:center;}
 #daumRoughmapContainer1501237294692 {width:100%;margin:20px auto;}
+#googleMapJP {display:none;}
 
 #htmlDOM {text-align:center;}
 #marriage_title {margin:20px 0;font-size:14px;color:#333;}
