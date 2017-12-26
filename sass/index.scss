@@ -1,0 +1,9 @@
+@charset "utf-8";
+
+@import 'sprites.scss';
+@include retina-sprites($retina-groups);
+
+$sundayColor: #f43142;
+$saturdayColor: #5f87df;
+$whiteColor: #fff !global;;
+

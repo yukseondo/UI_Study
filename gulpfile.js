@@ -9,71 +9,33 @@ var connect = require('gulp-connect');
 var sass = require('gulp-sass');
 var sassbeautify = require('gulp-sassbeautify');
 
-
 // Define our tasks
-// gulp.task('sass', function generateSass () {
-//     gulp.src('css/*.scss')
-//         .pipe(sass({outputStyle: 'expanded'}))  //outputStyle : expanded, compact, compressed
-//         .pipe(gulp.dest('scss/'));
-// });
-
-// https://www.npmjs.com/package/gulp.spritesmith
-gulp.task('sprite', function () {
-    // Generate our spritesheet
-    var spriteData = gulp.src('img/sprite/*.png').pipe(spritesmith({
-        // retinaSrcFilter: ['img/sprite/*@2x.png'],
-        imgName: 'sprite.png',
-        // retinaImgName: 'spritesheet@2x.png',
-        padding: 5,
-        cssName: 'sprite.css'
-    }));
-
-    // Pipe image stream through image optimizer and onto disk
-    var imgStream = spriteData.img
-    // DEV: We must buffer our stream into a Buffer for `imagemin`
-        .pipe(buffer())
-        .pipe(imagemin())
-        .pipe(gulp.dest('img/'));
-
-    // Pipe CSS stream through CSS optimizer and onto disk
-    var cssStream = spriteData.css
-        .pipe(csso()) //CSS를 압축한다.
-        .pipe(gulp.dest('css/'));
-
-    // Return a merged stream to handle both `end` events
-    return merge(imgStream, cssStream);
+gulp.task('sass', function generateSass () {
+  gulp.src('sass/index.scss')
+    .pipe(sass())
+    .pipe(gulp.dest('dist/css/'));
 });
 
-// gulp 서버 : https://www.npmjs.com/package/gulp-server-livereload
-// gulp.task('webserver', function(){
-//     gulp.src('./')
-//         .pipe(server({
-//             livereload: true,
-//             open: true,
-//             directoryListing: true
-//             //defaultFile: 'index.html',
-//             // port: 8888
-//         }));
-// });
-// gulp.task('default', ['webserver']);
+gulp.task('sprite', function generateSpritesheets () {
+  // Use all normal and `-2x` (retina) images as `src`
+  //   e.g. `github.png`, `github-2x.png`
+  var spriteData = gulp.src('dist/img/*.png')
+    .pipe(spritesmith({
+      // Filter out `-2x` (retina) images to separate spritesheet
+      //   e.g. `github-2x.png`, `twitter-2x.png`
+      retinaSrcFilter: 'dist/img/*_2x.png',
 
-// Webserver2
-// gulp.task('connect', function(){
-//     connect.server({
-//         root: './',
-//         livereload: true,
-//         port: 8001
-//     });
-// });
-// gulp.task('html', function(){
-//     gulp.src('./**/**/*.html')
-//         .pipe(connect.reload());
-// });
-// gulp.task('watch', function(){
-//     gulp.watch(['./**/**/*.html'], ['html']); // html 리로드
-// });
-//
-// gulp.task('default', ['connect','watch']);
+      // Generate a normal and a `-2x` (retina) spritesheet
+      imgName: 'dist/img/sprites/sp.png',
+      retinaImgName: 'dist/img/sprites/sp_2x.png',
 
+      // Generate SCSS variables/mixins for both spritesheets
+      cssName: 'sprites.scss'
+    }));
 
-// https://bl.ocks.org/twolfson/860a1d47e483bc34e1fa (Retina)
+  // Deliver spritesheets to `dist/` folder as they are completed
+  spriteData.img.pipe(gulp.dest('dist/img/sprites/'));
+
+  // Deliver CSS to `./` to be imported by `index.scss`
+  spriteData.css.pipe(gulp.dest('dist/css/'));
+});
