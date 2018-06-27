@@ -157,21 +157,19 @@
     <script>
         var inputVal = document.getElementById("myInput"),
             ulList = document.getElementById("myUL"),
-            todoList = ulList.children;
+            todoList = ulList;
         var close = document.getElementsByClassName("close");
 
 
         function CreateLiElement(){
-            var liNode = document.createElement("LI"),
+            var liNode = document.createElement("li"),
             textNode = document.createTextNode(inputVal.value);
+
             liNode.appendChild(textNode);
             liNode.appendChild(CreateSpanElement());
-
             ulList.appendChild(liNode);
 
-            deleteList()
-
-            return liNode;
+            deleteList();
         }
         
         function CreateSpanElement(){
@@ -185,14 +183,20 @@
             return span;
         }
         
-        for(var i=0; i < todoList.length; i++){
-            todoList[i].appendChild(CreateSpanElement());
-            todoList[i].addEventListener('click', function(e){
-                if(e.target.tagName === 'LI'){
+        for (var i = 0; i < todoList.children.length; i++) {
+            todoList.children[i].appendChild(CreateSpanElement())
+        }
+
+        function checkClass(){
+            todoList.addEventListener('click', function(e){
+                console.log(e.target.tagName)
+                if (e.target.tagName === 'LI') {
                     e.target.classList.toggle('checked');
                 }
             })
         }
+        
+        checkClass();
         
         function deleteList(){
             for (var j = 0; j < close.length; j++) {
